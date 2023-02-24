@@ -1,4 +1,4 @@
-# Objektinio programavimo laboratorinis darbas - 1-oji užduotis. (v0.1)
+# Objektinio programavimo laboratorinis darbas - 1-oji užduotis.
 
 ### **Programa, skirta studentų galutinio balo skaičiavimui. Realizuota dvejais būdais: naudojant dinaminius masyvus ir naudojant vektorius**
 
