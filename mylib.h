@@ -9,11 +9,10 @@
 #include <vector>
 #include <random>
 #include <ctime>
-#include <numeric> // kam reikia?
-#include <chrono> // ar reikia?
+#include <numeric>
+#include <chrono>
 #include <regex>
 #include <fstream>
-#include <cstdlib> // gal nereikia?
 #include <sstream>
 
 using std::cout;
@@ -36,6 +35,8 @@ using std::ifstream;
 using std::ofstream;
 using std::exception;
 using std::cerr;
+using std::unique_ptr;
+using std::ostringstream;
 
 template <class T>
 void statistika (vector <T> &temp){

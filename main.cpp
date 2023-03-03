@@ -70,9 +70,8 @@ int main()
                     spausd(i,uzkl_3,uzkl_1);
         }
     } else
-        for(const auto &i:grupe)
-            spausd(i,uzkl_2,uzkl_1);
-    for(auto &i:grupe) i.paz.clear(); /// anksciau nebuvo; ar reikia?
+        spausd_i_faila(grupe,uzkl_2);
+    for(auto &i:grupe) i.paz.clear();
     grupe.clear();
     return 0;
 }

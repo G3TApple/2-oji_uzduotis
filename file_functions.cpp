@@ -1,4 +1,5 @@
 #include "mylib.h"
+#include "file_functions.h"
 
 extern int paz_skaicius;
 
@@ -75,8 +76,10 @@ void failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
     fd.close();
 }
 
-void spausd_i_faila(const Studentas &temp, int uzkl_2){
-    ofstream fr ("output.txt",std::ios::app);
+void spausd_i_faila(vector<Studentas>& grupe, int uzkl_2){
+    sort(grupe.begin(), grupe.end(), grupes_rikiavimas);
+    ofstream fr ("output.txt");
+    /*
     fr<<left<<setw(15)<<temp.vardas<<setw(20)<<temp.pavarde;
     switch(uzkl_2){
     case 1:
@@ -92,5 +95,38 @@ void spausd_i_faila(const Studentas &temp, int uzkl_2){
         for (const auto &i: temp.paz) fr << setw(3) << i << " ";
         fr << right << setw(10+(paz_skaicius-temp.paz.size())*4) << "Egz.: " << temp.egz << endl;
         break;
+    }*/
+
+    unique_ptr<ostringstream> oss(new ostringstream());
+
+
+    (*oss) <<left<<setw(15)<<"Vardas"<<setw(20)<<"Pavarde";
+    switch(uzkl_2){
+        case 1:
+            (*oss)<<setw(15)<<"Galutinis (Vid.)"<<endl;
+            break;
+        case 2:
+            (*oss)<<setw(15)<<"Galutinis (Med.)"<<endl;
+            break;
+        case 3:
+            (*oss)<<setw(15)<<"Galutinis (Vid. / Med.)"<<endl;
+            break;
+        }
+    cout<<"---------------------------------------------------"<<endl;
+    fr << oss->str();
+    oss->str("");
+    for(const auto &i:grupe){
+        (*oss) << setw(15) << left << i.vardas << setw(20) << left << i.pavarde << setw(18) << left << setprecision(3) << i.gal_vid << setw(18) << left << setprecision(3) << i.gal_med << endl;
+        //if ((i + 1) % 10 == 0 || i + 1 == studentai.size())
     }
+    fr << oss->str();
+    oss->str("");
+    fr.close();
+}
+
+bool grupes_rikiavimas(const Studentas &a, const Studentas &b){
+    if (a.pavarde == b.pavarde)
+        return a.vardas < b.vardas;
+    else
+        return a.pavarde < b.pavarde;
 }
