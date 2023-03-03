@@ -2,54 +2,81 @@
 
 extern int paz_skaicius;
 
-void failo_nuskaitymas(vector<Studentas>& grupe){
+void failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
     paz_skaicius = 0;
     Studentas temp;
-    string eilute, readfile, zodis;
+    string eilute, eilute2, readfile, zodis;
     int n = 0;
+    ofstream fr ("output.txt");
+    fr<<endl<<left<<setw(15)<<"Vardas"<<setw(20)<<"Pavarde";
+    switch(uzkl_2){
+        case 1:
+            fr<<setw(15)<<"Galutinis (Vid.)\n"<<endl;
+            break;
+        case 2:
+            fr<<setw(15)<<"Galutinis (Med.)\n"<<endl;
+            break;
+        case 3:
+            fr<<setw(15)<<"Galutinis (Vid. / Med.)\n"<<endl;
+            break;
+        };
     cout << "Pasiekiami failai:\n";
     cout << "-----------------------\n";
     system("dir /B *.txt");
-    cout << "-----------------------\nIveskite failo pavadinima, is kurio norite nuskaityti duomenis. ";
+    cout << "-----------------------\nIveskite failo pavadinima, is kurio norite nuskaityti duomenis: ";
     cin >> readfile;
+    ifstream fd;
+    try{
+        fd.open(readfile);
+        if(!fd.good()) throw "Toks failas nerastas.";
 
-    ifstream fd (readfile);
-    if(fd){
-        int p;
-        getline(fd,eilute);  ///Pazymiu kiekio skaiciavimas
-        stringstream s(eilute);
-        while(s >> zodis)
-            paz_skaicius++;
-        paz_skaicius -= 3;
-        if(paz_skaicius != 0){
-            while(fd)
-            if(!fd.eof()){
-                fd >> temp.vardas >> temp.pavarde;
-                for(int i=0;i<paz_skaicius-1;i++){
-                    fd>>p;
-                    temp.paz.push_back(p);
-                }
-                fd>>temp.egz;
-                fd.ignore(numeric_limits<std::streamsize>::max(), '\n');
-                grupe.push_back(temp);
-                temp.paz.clear();
-                n++;
+    } catch (const char* e){
+        cout << e << endl;
+    }
+    int p;
+    getline(fd,eilute);  ///Pazymiu kiekio skaiciavimas
+    stringstream s(eilute);
+    while(s >> zodis)
+        paz_skaicius++;
+    paz_skaicius -= 3;
+    if(paz_skaicius != 0){
+        while(getline(fd, eilute2))
+        if(!fd.eof()){
+            stringstream ss(eilute2);
+            ss >> temp.vardas >> temp.pavarde;
+            for(int i=0;i<paz_skaicius;i++){
+                ss>>p;
+                temp.paz.push_back(p);
             }
-            else
+            ss>>temp.egz;
+            switch(uzkl_2){
+            case 1:
+                vidurkis(temp);
                 break;
+            case 2:
+                mediana(temp);
+                break;
+            case 3:
+                vidurkis(temp);
+                mediana(temp);
+                break;
+            case 4:
+                break;
+            }
+            grupe.push_back(temp);
+            temp.paz.clear();
+            n++;
         }
         else
-            cout << "Klaida: duomenu faile nerasta pazymiu.";
+            break;
     }
-    else if(fd.failbit)
-        cout << "Klaida: netinkami duomenys faile, failas tuscias arba nerastas.";
-    else if(fd.badbit)
-        cout << "Esmine klaida. Rysys su failu sugadintas arba prarastas.";
+    else
+        cout << "Klaida: duomenu faile nerasta pazymiu.";
     fd.close();
 }
 
 void spausd_i_faila(const Studentas &temp, int uzkl_2){
-    ofstream fr ("output.txt", std::ios::app);
+    ofstream fr ("output.txt",std::ios::app);
     fr<<left<<setw(15)<<temp.vardas<<setw(20)<<temp.pavarde;
     switch(uzkl_2){
     case 1:

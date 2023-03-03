@@ -74,32 +74,43 @@ void pild(Studentas &temp, int uzkl_2){
         else
             break;
     }
-    if(uzkl_2 == 1)
+    switch(uzkl_2){
+    case 1:
         vidurkis(temp);
-    if(uzkl_2 == 2)
+        break;
+    case 2:
         mediana(temp);
+        break;
+    case 3:
+        vidurkis(temp);
+        mediana(temp);
+        break;
+    case 4:
+        break;
+    }
     cout << "Duomenys irasyti." << endl;
 }
 
 void spausd(const Studentas &temp, int uzkl_2, int uzkl_1){
-    if(uzkl_1 == 3)
+    if(uzkl_1 != 3){
+        cout<<left<<setw(15)<<temp.vardas<<setw(20)<<temp.pavarde;
+        switch(uzkl_2){
+        case 1:
+            cout<<setw(3)<<fixed<<setprecision(2)<<temp.gal_vid<<"       \n";
+            break;
+        case 2:
+            cout<<setw(3)<<fixed<<setprecision(2)<<temp.gal_med<<"       \n";
+            break;
+        case 3:
+            cout<<setw(3)<<fixed<<setprecision(2)<<temp.gal_vid<<" / "<<temp.gal_med<<"\n";
+            break;
+        case 4:
+            for (const auto &i: temp.paz) cout << setw(3) << i << " ";
+            cout << right << setw(10+(paz_skaicius-temp.paz.size())*4) << "Egz.: " << temp.egz << endl;
+            break;
+        }
+    } else
         spausd_i_faila(temp,uzkl_2);
-    cout<<left<<setw(15)<<temp.vardas<<setw(20)<<temp.pavarde;
-    switch(uzkl_2){
-    case 1:
-        cout<<setw(3)<<fixed<<setprecision(2)<<temp.gal_vid<<"       \n";
-        break;
-    case 2:
-        cout<<setw(3)<<fixed<<setprecision(2)<<temp.gal_med<<"       \n";
-        break;
-    case 3:
-        cout<<setw(3)<<fixed<<setprecision(2)<<temp.gal_vid<<" / "<<temp.gal_med<<"\n";
-        break;
-    case 4:
-        for (const auto &i: temp.paz) cout << setw(3) << i << " ";
-        cout << right << setw(10+(paz_skaicius-temp.paz.size())*4) << "Egz.: " << temp.egz << endl;
-        break;
-    }
 }
 
 void gen_paz(int kelintas, int uzkl_2, Studentas &temp){
@@ -109,9 +120,9 @@ void gen_paz(int kelintas, int uzkl_2, Studentas &temp){
     static std::uniform_int_distribution<int> dist_egz(1,10);
     temp.vardas = "Vardas" + to_string(kelintas);
     temp.pavarde = "Pavarde" + to_string(kelintas);
-    temp.egz = dist(_rnd);
+    temp.egz = dist_egz(_rnd);
     for(int i=0;i<paz_skaicius;i++)
-        temp.paz.push_back(dist_egz(_rnd));
+        temp.paz.push_back(dist(_rnd));
     switch(uzkl_2){
     case 1:
         vidurkis(temp);

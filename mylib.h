@@ -34,6 +34,8 @@ using std::getline;
 using std::stringstream;
 using std::ifstream;
 using std::ofstream;
+using std::exception;
+using std::cerr;
 
 template <class T>
 void statistika (vector <T> &temp){

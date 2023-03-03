@@ -2,7 +2,7 @@
 
 ### **Programa, skirta studentų galutinio balo skaičiavimui.**
 
-- Programa leidžia pasirinkti įvesti duomenis vartotojui, duomenis generuoti automatiškai arba nuskaityti duomenis iš failo. Toliau galima pasirinkti generuoti vidurkį, medianą, vidurkį ir medianą arba spausdinti visus pažymius.
+- Programa leidžia pasirinkti įvesti duomenis vartotojui, duomenis generuoti automatiškai arba nuskaityti duomenis iš failo. Toliau galima pasirinkti generuoti vidurkį, medianą, vidurkį ir medianą arba spausdinti visus pažymius (tik įvedant arba generuojant duomenis).
 
 **Duomenų įvedimas ranka:**
 1. Vartotojas turi įvesti didžiausią įmanomą pažymių skaičių. 
