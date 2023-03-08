@@ -3,7 +3,7 @@
 
 extern int paz_skaicius;
 
-void failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
+double failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
     paz_skaicius = 0;
     Studentas temp;
     string eilute, eilute2, readfile, zodis;
@@ -15,10 +15,11 @@ void failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
     ifstream fd;
     try{
         fd.open(readfile);
-        if(!fd.good()) throw "Toks failas nerastas.";
-
-    } catch (const char* e){
-        cout << e << endl;
+        if(!fd.good())
+            throw std::runtime_error("Toks failas nerastas.");
+    } catch (const std::exception& e){
+        std::cerr << "Klaida: " << e.what() << endl;
+        return 1;
     }
     int p;
     Timer t;
@@ -56,14 +57,14 @@ void failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
         }
     } else
         cout << "Klaida: duomenu faile nerasta pazymiu.";
-    if(fd)
-        cout << "Skaitymas is failo uztruko: "<< t.elapsed() << "s\n";
+    cout << "Skaitymas is failo uztruko: "<< t.elapsed() << "s\n";
     fd.close();
+    return t.elapsed();
 }
 
 void spausd_i_faila(vector<Studentas>& grupe, int uzkl_1, int uzkl_2, string filename){
     //if(uzkl_1 == 3)
-        //sort(grupe.begin(), grupe.end(), grupes_rik_pagal_varda);
+        //sort(grupe.begin(), grupe.end(), grupes_rik_pagal_varda); /// padaryt vartotojui uzklausa, koki rikiavima jis nori naudot
     ofstream fr (filename);
     unique_ptr<ostringstream> oss(new ostringstream());
     (*oss) <<left<<setw(15)<<"Vardas"<<setw(20)<<"Pavarde";

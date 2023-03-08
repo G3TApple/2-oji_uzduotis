@@ -67,7 +67,7 @@ void ting_moksl(vector<Studentas> &grupe, vector<Studentas> &tinginiai, int uzkl
 void stud_ivest(vector<Studentas> &grupe, Studentas &temp, int uzkl_2);
 void pild(Studentas &temp, int uzkl_2);
 void spausd(const Studentas &temp, int uzkl_2, int uzkl_1);
-void stud_gen(vector<Studentas> &grupe, Studentas &temp, int uzkl_2);
+double stud_gen(vector<Studentas> &grupe, Studentas &temp, int uzkl_2);
 void gen_paz(int kelintas, int uzkl_2, Studentas &temp);
 void mediana(Studentas &temp);
 void vidurkis(Studentas &temp);

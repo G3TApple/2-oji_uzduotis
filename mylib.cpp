@@ -3,7 +3,6 @@
 extern size_t paz_skaicius;
 
 void ting_moksl(vector<Studentas> &grupe, vector<Studentas> &tinginiai, int uzkl_2){
-    Timer rusiavimas;
     if(uzkl_2 == 1 || uzkl_2 == 3){      /// Jei galutinis yra vidurkis arba vidurkis/mediana - skaiciuojama pagal vidurki
         sort(grupe.begin(), grupe.end(), grupes_rik_pagal_vid);
         for(size_t i=grupe.size();i>0;i--){
@@ -23,9 +22,7 @@ void ting_moksl(vector<Studentas> &grupe, vector<Studentas> &tinginiai, int uzkl
             } else
                 break;
         }
-
     }
-    cout << "Studentu rusiavimas i dvi grupes truko: "<< rusiavimas.elapsed() << "s\n";
 }
 
 void stud_ivest(vector<Studentas> &grupe, Studentas &temp, int uzkl_2){
@@ -157,7 +154,7 @@ void gen_paz(int kelintas, int uzkl_2, Studentas &temp){
     }
 }
 
-void stud_gen(vector<Studentas> &grupe, Studentas &temp, int uzkl_2){
+double stud_gen(vector<Studentas> &grupe, Studentas &temp, int uzkl_2){
     int stud_sk;
     cout << "Kiek studentu norite generuoti? ";
     cin >> stud_sk;
@@ -173,12 +170,15 @@ void stud_gen(vector<Studentas> &grupe, Studentas &temp, int uzkl_2){
             cin.clear();
             cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
         }
+    Timer gen;
     for(int i=0;i<stud_sk;i++){
         if(grupe.size()==grupe.capacity()) grupe.reserve(1000);
         gen_paz(i,uzkl_2,temp);
         grupe.push_back(temp);
         temp.paz.clear();
     }
+    cout << "Studentu duomenu generavimas uztruko: " << gen.elapsed() << "s\n";
+    return gen.elapsed();
 }
 
 ///Pagalbines funkcijos/////////////////////////////////////////////////////////

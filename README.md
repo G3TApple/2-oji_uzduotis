@@ -33,3 +33,10 @@
 
 ### Programos veikimo nuotrauka (v0.1): 
 ![image](https://user-images.githubusercontent.com/116343289/221123906-367b75ab-b0f9-49ac-924d-c2dc56dcebd6.png)
+
+### Programos generavimo spartos lentelė: <br>
+|                  **Studentų kiekis** | **1.000** | **10.000** | **100.000** | **1.000.000** | **10.000.000** |
+|-------------------------------------:|-----------|------------|-------------|---------------|----------------|
+| _Duomenų generavimas (laikas, s)_    | 0,002     | 0,006      | 0,056       | 0,484         | 5,229          |
+| _Spausdinimas į failą (laikas, s)_   | 0,003     | 0,013      | 0,112       | 1,082         | 10,332         |
+| _Visas programos darbas (laikas, s)_ | 0,005     | 0,019      | 0,168       | 1,566         | 15.561         |
