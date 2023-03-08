@@ -3,11 +3,10 @@
 
 extern int paz_skaicius;
 
-void failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
+double failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
     paz_skaicius = 0;
     Studentas temp;
     string eilute, eilute2, readfile, zodis;
-    int n = 0;
     cout << "Pasiekiami failai:\n";
     cout << "-----------------------\n";
     system("dir /B *.txt");
@@ -16,20 +15,22 @@ void failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
     ifstream fd;
     try{
         fd.open(readfile);
-        if(!fd.good()) throw "Toks failas nerastas.";
-
-    } catch (const char* e){
-        cout << e << endl;
+        if(!fd.good())
+            throw std::runtime_error("Toks failas nerastas.");
+    } catch (const std::exception& e){
+        std::cerr << "Klaida: " << e.what() << endl;
+        return 1;
     }
     int p;
+    Timer t;
     getline(fd,eilute);  ///Pazymiu kiekio skaiciavimas
     stringstream s(eilute);
     while(s >> zodis)
         paz_skaicius++;
     paz_skaicius -= 3;
     if(paz_skaicius != 0){
-        while(getline(fd, eilute2))
-        if(!fd.eof()){
+        while(!(fd.eof())){
+            getline(fd, eilute2);
             stringstream ss(eilute2);
             ss >> temp.vardas >> temp.pavarde;
             for(int i=0;i<paz_skaicius;i++){
@@ -53,19 +54,18 @@ void failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
             }
             grupe.push_back(temp);
             temp.paz.clear();
-            n++;
         }
-        else
-            break;
-    }
-    else
+    } else
         cout << "Klaida: duomenu faile nerasta pazymiu.";
+    cout << "Skaitymas is failo uztruko: "<< t.elapsed() << "s\n";
     fd.close();
+    return t.elapsed();
 }
 
-void spausd_i_faila(vector<Studentas>& grupe, int uzkl_2){
-    sort(grupe.begin(), grupe.end(), grupes_rikiavimas);
-    ofstream fr ("output.txt");
+void spausd_i_faila(vector<Studentas>& grupe, int uzkl_1, int uzkl_2, string filename){
+    //if(uzkl_1 == 3)
+        //sort(grupe.begin(), grupe.end(), grupes_rik_pagal_varda); /// padaryt vartotojui uzklausa, koki rikiavima jis nori naudot
+    ofstream fr (filename);
     unique_ptr<ostringstream> oss(new ostringstream());
     (*oss) <<left<<setw(15)<<"Vardas"<<setw(20)<<"Pavarde";
     switch(uzkl_2){
@@ -78,8 +78,13 @@ void spausd_i_faila(vector<Studentas>& grupe, int uzkl_2){
         case 3:
             (*oss)<<setw(15)<<"Galutinis (Vid. / Med.)"<<endl;
             break;
+        case 4:
+            for(int i=1;i<=paz_skaicius;i++)
+                (*oss)<<"ND"<<setw(4)<<to_string(i);
+            (*oss)<<"Egz."<<endl;
+            break;
         }
-    (*oss)<<"---------------------------------------------------------"<<endl;
+    (*oss)<<"----------------------------------------------------------------------------------------------------------------------"<<endl;
     fr << oss->str();
     oss->str("");
     switch(uzkl_2){
@@ -95,16 +100,17 @@ void spausd_i_faila(vector<Studentas>& grupe, int uzkl_2){
         for(const auto &i:grupe)
             (*oss)<<setw(15)<<i.vardas<<setw(20)<<i.pavarde<<setw(3)<<fixed<<setprecision(2)<<i.gal_vid<<" / "<<i.gal_med<<"\n";
         break;
+    case 4:
+        for(const auto &i:grupe){
+            (*oss)<<setw(15)<<i.vardas<<setw(20)<<i.pavarde;
+            for (const auto &j: i.paz)
+                (*oss) << setw(5) << j << " ";
+            (*oss) << setw(5) << i.egz << endl;
+        }
+        break;
     }
 
     fr << oss->str();
     oss->str("");
     fr.close();
-}
-
-bool grupes_rikiavimas(const Studentas &a, const Studentas &b){
-    if (a.pavarde == b.pavarde)
-        return a.vardas < b.vardas;
-    else
-        return a.pavarde < b.pavarde;
 }

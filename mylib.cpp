@@ -1,7 +1,29 @@
 #include "mylib.h"
 
-extern int paz_skaicius;
-extern void spausd_i_faila(const Studentas& temp, int uzkl_2);
+extern size_t paz_skaicius;
+
+void ting_moksl(vector<Studentas> &grupe, vector<Studentas> &tinginiai, int uzkl_2){
+    if(uzkl_2 == 1 || uzkl_2 == 3){      /// Jei galutinis yra vidurkis arba vidurkis/mediana - skaiciuojama pagal vidurki
+        sort(grupe.begin(), grupe.end(), grupes_rik_pagal_vid);
+        for(size_t i=grupe.size();i>0;i--){
+            if(grupe[i-1].gal_vid<5.0){
+                tinginiai.push_back(grupe[i-1]);
+                grupe.pop_back();
+            } else
+                break;
+        }
+    }
+    if(uzkl_2 == 2){        /// Jei galutinis yra mediana - skaiciuojama pagal mediana
+        sort(grupe.begin(), grupe.end(), grupes_rik_pagal_med);
+        for(size_t i=grupe.size();i>0;i--){
+            if(grupe[i-1].gal_med<5.0){
+                tinginiai.push_back(grupe[i-1]);
+                grupe.pop_back();
+            } else
+                break;
+        }
+    }
+}
 
 void stud_ivest(vector<Studentas> &grupe, Studentas &temp, int uzkl_2){
     string uzkl;
@@ -22,10 +44,6 @@ void stud_ivest(vector<Studentas> &grupe, Studentas &temp, int uzkl_2){
         cin.ignore();
         getline(cin, uzkl);
     } while (uzkl != "n" && uzkl != "N");
-}
-
-bool tik_raides(string name){
-    return !std::regex_match(name, std::regex("^[A-Za-z]+$"));
 }
 
 void pild(Studentas &temp, int uzkl_2){
@@ -59,7 +77,7 @@ void pild(Studentas &temp, int uzkl_2){
             break;
         }
         //statistika(temp.paz);
-    } while(cin && temp.paz.size() < paz_skaicius || temp.paz.empty()); /// AR CIA VISKAS GERAI?
+    } while((temp.paz.size() < paz_skaicius) || temp.paz.empty()); /// AR CIA VISKAS GERAI?
     cin.clear();
     std::cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
     cout << "Iveskite egzamino paz. ";
@@ -118,7 +136,7 @@ void gen_paz(int kelintas, int uzkl_2, Studentas &temp){
     temp.vardas = "Vardas" + to_string(kelintas);
     temp.pavarde = "Pavarde" + to_string(kelintas);
     temp.egz = dist_egz(_rnd);
-    for(int i=0;i<paz_skaicius;i++)
+    for(size_t i=0;i<paz_skaicius;i++)
         temp.paz.push_back(dist(_rnd));
     switch(uzkl_2){
     case 1:
@@ -136,7 +154,7 @@ void gen_paz(int kelintas, int uzkl_2, Studentas &temp){
     }
 }
 
-void stud_gen(vector<Studentas> &grupe, Studentas &temp, int uzkl_2){
+double stud_gen(vector<Studentas> &grupe, Studentas &temp, int uzkl_2){
     int stud_sk;
     cout << "Kiek studentu norite generuoti? ";
     cin >> stud_sk;
@@ -152,13 +170,18 @@ void stud_gen(vector<Studentas> &grupe, Studentas &temp, int uzkl_2){
             cin.clear();
             cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
         }
+    Timer gen;
     for(int i=0;i<stud_sk;i++){
         if(grupe.size()==grupe.capacity()) grupe.reserve(1000);
         gen_paz(i,uzkl_2,temp);
         grupe.push_back(temp);
         temp.paz.clear();
     }
+    cout << "Studentu duomenu generavimas uztruko: " << gen.elapsed() << "s\n";
+    return gen.elapsed();
 }
+
+///Pagalbines funkcijos/////////////////////////////////////////////////////////
 
 void vidurkis(Studentas &temp){
     double paz_suma = accumulate(temp.paz.begin(),temp.paz.end(),0.);
@@ -173,4 +196,46 @@ void mediana(Studentas &temp){
     else                /// jei pazymiu skaicius nelyginis
         med = temp.paz[temp.paz.size()/2];
     temp.gal_med = 0.4*med+0.6*temp.egz;
+}
+
+bool tik_raides(string name){
+    return !std::regex_match(name, std::regex("^[A-Za-z]+$"));
+}
+
+void int_input_check(int& input, vector<int> correct){
+    if (!(cin >> input)) {
+            cin.clear();
+            cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+        }
+    for(int i : correct)
+        if(input == i)
+            return;
+    cout << "Klaidinga ivestis. Turite ivesti viena is siu skaiciu: ";
+    for(size_t i=0;i<correct.size();i++)
+        if(correct.size()-i-1 != 0)
+            cout << "'" << correct[i] << "', ";
+        else
+            cout << "'" << correct[i] << "'.\n";
+    int_input_check(input,correct);
+}
+
+bool grupes_rik_pagal_varda(const Studentas &a, const Studentas &b){
+    if (a.pavarde == b.pavarde)
+        return a.vardas < b.vardas;
+    else
+        return a.pavarde < b.pavarde;
+}
+
+bool grupes_rik_pagal_vid(const Studentas &a, const Studentas &b){
+    if (a.gal_vid == b.gal_vid)
+        return a.gal_vid > b.gal_vid;
+    else
+        return a.gal_vid > b.gal_vid;
+}
+
+bool grupes_rik_pagal_med(const Studentas &a, const Studentas &b){
+    if (a.gal_med == b.gal_med)
+        return a.gal_med > b.gal_med;
+    else
+        return a.gal_med > b.gal_med;
 }
