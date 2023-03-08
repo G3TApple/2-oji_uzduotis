@@ -50,6 +50,21 @@ struct Studentas{
     double gal_vid = 0, gal_med = 0;
 };
 
+class Timer {
+    private:
+       std::chrono::time_point<std::chrono::high_resolution_clock> start;
+    public:
+        Timer() : start{std::chrono::high_resolution_clock::now()} {}
+        void reset() {
+            start = std::chrono::high_resolution_clock::now();
+        }
+        double elapsed() const {
+            return std::chrono::duration<double>(std::chrono::high_resolution_clock::now() - start).count();
+        }
+};
+
+bool tik_raides(string name);
+void int_input_check(int& input, vector<int> correct);
 void stud_ivest(vector<Studentas> &grupe, Studentas &temp, int uzkl_2);
 void pild(Studentas &temp, int uzkl_2);
 void spausd(const Studentas &temp, int uzkl_2, int uzkl_1);

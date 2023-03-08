@@ -1,7 +1,27 @@
 #include "mylib.h"
 
 extern int paz_skaicius;
-extern void spausd_i_faila(const Studentas& temp, int uzkl_2);
+
+bool tik_raides(string name){
+    return !std::regex_match(name, std::regex("^[A-Za-z]+$"));
+}
+
+void int_input_check(int& input, vector<int> correct){
+    if (!(cin >> input)) {
+            cin.clear();
+            cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+        }
+    for(int i : correct)
+        if(input == i)
+            return;
+    cout << "Klaidinga ivestis. Turite ivesti viena is siu skaiciu: ";
+    for(int i=1;i<=(int)correct.size();i++)
+        if(correct.size()-i != 0)
+            cout << "'" << i << "', ";
+        else
+            cout << "'" << i << "'.\n";
+    int_input_check(input,correct);
+}
 
 void stud_ivest(vector<Studentas> &grupe, Studentas &temp, int uzkl_2){
     string uzkl;
@@ -22,10 +42,6 @@ void stud_ivest(vector<Studentas> &grupe, Studentas &temp, int uzkl_2){
         cin.ignore();
         getline(cin, uzkl);
     } while (uzkl != "n" && uzkl != "N");
-}
-
-bool tik_raides(string name){
-    return !std::regex_match(name, std::regex("^[A-Za-z]+$"));
 }
 
 void pild(Studentas &temp, int uzkl_2){
@@ -58,7 +74,7 @@ void pild(Studentas &temp, int uzkl_2){
             cout << "Ivedete per daug pazymiu. Bus irasyti tik pirmi " << paz_skaicius << " pazymiai.\n";
             break;
         }
-        //statistika(temp.paz);
+        statistika(temp.paz);
     } while(cin && temp.paz.size() < paz_skaicius || temp.paz.empty()); /// AR CIA VISKAS GERAI?
     cin.clear();
     std::cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
@@ -104,7 +120,7 @@ void spausd(const Studentas &temp, int uzkl_2, int uzkl_1){
         cout<<setw(3)<<fixed<<setprecision(2)<<temp.gal_vid<<" / "<<temp.gal_med<<"\n";
         break;
     case 4:
-        for (const auto &i: temp.paz) cout << setw(3) << i << " ";
+        for (int i = 0;i<10;i++) cout << setw(3) << temp.paz[i] << " ";
         cout << right << setw(10+(paz_skaicius-temp.paz.size())*4) << "Egz.: " << temp.egz << endl;
         break;
     }

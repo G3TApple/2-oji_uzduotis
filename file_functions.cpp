@@ -22,6 +22,7 @@ void failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
         cout << e << endl;
     }
     int p;
+    Timer t;
     getline(fd,eilute);  ///Pazymiu kiekio skaiciavimas
     stringstream s(eilute);
     while(s >> zodis)
@@ -60,11 +61,13 @@ void failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
     }
     else
         cout << "Klaida: duomenu faile nerasta pazymiu.";
+    std::cout << "Skaitymas is failo uztruko: "<< t.elapsed() << "s\n";
     fd.close();
 }
 
-void spausd_i_faila(vector<Studentas>& grupe, int uzkl_2){
-    sort(grupe.begin(), grupe.end(), grupes_rikiavimas);
+void spausd_i_faila(vector<Studentas>& grupe, int uzkl_1, int uzkl_2){
+    if(uzkl_1 == 3)
+        sort(grupe.begin(), grupe.end(), grupes_rikiavimas);
     ofstream fr ("output.txt");
     unique_ptr<ostringstream> oss(new ostringstream());
     (*oss) <<left<<setw(15)<<"Vardas"<<setw(20)<<"Pavarde";
@@ -77,6 +80,11 @@ void spausd_i_faila(vector<Studentas>& grupe, int uzkl_2){
             break;
         case 3:
             (*oss)<<setw(15)<<"Galutinis (Vid. / Med.)"<<endl;
+            break;
+        case 4:
+            for(int i=1;i<=paz_skaicius;i++)
+                (*oss)<<setw(5)<<"ND"<<to_string(i);
+            (*oss)<<setw(5)<<"Egz."<<endl;
             break;
         }
     (*oss)<<"---------------------------------------------------------"<<endl;
@@ -94,6 +102,13 @@ void spausd_i_faila(vector<Studentas>& grupe, int uzkl_2){
     case 3:
         for(const auto &i:grupe)
             (*oss)<<setw(15)<<i.vardas<<setw(20)<<i.pavarde<<setw(3)<<fixed<<setprecision(2)<<i.gal_vid<<" / "<<i.gal_med<<"\n";
+        break;
+    case 4:
+        for(const auto &i:grupe){
+            for (const auto &j: i.paz)
+                (*oss) << setw(5) << j << " ";
+            (*oss) << setw(5) << i.egz << endl;
+        }
         break;
     }
 
