@@ -7,7 +7,6 @@ void failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
     paz_skaicius = 0;
     Studentas temp;
     string eilute, eilute2, readfile, zodis;
-    int n = 0;
     cout << "Pasiekiami failai:\n";
     cout << "-----------------------\n";
     system("dir /B *.txt");
@@ -29,8 +28,8 @@ void failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
         paz_skaicius++;
     paz_skaicius -= 3;
     if(paz_skaicius != 0){
-        while(getline(fd, eilute2))
-        if(!fd.eof()){
+        while(!(fd.eof())){
+            getline(fd, eilute2);
             stringstream ss(eilute2);
             ss >> temp.vardas >> temp.pavarde;
             for(int i=0;i<paz_skaicius;i++){
@@ -54,21 +53,18 @@ void failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
             }
             grupe.push_back(temp);
             temp.paz.clear();
-            n++;
         }
-        else
-            break;
-    }
-    else
+    } else
         cout << "Klaida: duomenu faile nerasta pazymiu.";
-    std::cout << "Skaitymas is failo uztruko: "<< t.elapsed() << "s\n";
+    if(fd)
+        cout << "Skaitymas is failo uztruko: "<< t.elapsed() << "s\n";
     fd.close();
 }
 
-void spausd_i_faila(vector<Studentas>& grupe, int uzkl_1, int uzkl_2){
-    if(uzkl_1 == 3)
-        sort(grupe.begin(), grupe.end(), grupes_rikiavimas);
-    ofstream fr ("output.txt");
+void spausd_i_faila(vector<Studentas>& grupe, int uzkl_1, int uzkl_2, string filename){
+    //if(uzkl_1 == 3)
+        //sort(grupe.begin(), grupe.end(), grupes_rik_pagal_varda);
+    ofstream fr (filename);
     unique_ptr<ostringstream> oss(new ostringstream());
     (*oss) <<left<<setw(15)<<"Vardas"<<setw(20)<<"Pavarde";
     switch(uzkl_2){
@@ -83,11 +79,11 @@ void spausd_i_faila(vector<Studentas>& grupe, int uzkl_1, int uzkl_2){
             break;
         case 4:
             for(int i=1;i<=paz_skaicius;i++)
-                (*oss)<<setw(5)<<"ND"<<to_string(i);
-            (*oss)<<setw(5)<<"Egz."<<endl;
+                (*oss)<<"ND"<<setw(4)<<to_string(i);
+            (*oss)<<"Egz."<<endl;
             break;
         }
-    (*oss)<<"---------------------------------------------------------"<<endl;
+    (*oss)<<"----------------------------------------------------------------------------------------------------------------------"<<endl;
     fr << oss->str();
     oss->str("");
     switch(uzkl_2){
@@ -105,6 +101,7 @@ void spausd_i_faila(vector<Studentas>& grupe, int uzkl_1, int uzkl_2){
         break;
     case 4:
         for(const auto &i:grupe){
+            (*oss)<<setw(15)<<i.vardas<<setw(20)<<i.pavarde;
             for (const auto &j: i.paz)
                 (*oss) << setw(5) << j << " ";
             (*oss) << setw(5) << i.egz << endl;
@@ -115,11 +112,4 @@ void spausd_i_faila(vector<Studentas>& grupe, int uzkl_1, int uzkl_2){
     fr << oss->str();
     oss->str("");
     fr.close();
-}
-
-bool grupes_rikiavimas(const Studentas &a, const Studentas &b){
-    if (a.pavarde == b.pavarde)
-        return a.vardas < b.vardas;
-    else
-        return a.pavarde < b.pavarde;
 }

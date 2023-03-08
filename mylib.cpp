@@ -1,26 +1,31 @@
 #include "mylib.h"
 
-extern int paz_skaicius;
+extern size_t paz_skaicius;
 
-bool tik_raides(string name){
-    return !std::regex_match(name, std::regex("^[A-Za-z]+$"));
-}
-
-void int_input_check(int& input, vector<int> correct){
-    if (!(cin >> input)) {
-            cin.clear();
-            cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+void ting_moksl(vector<Studentas> &grupe, vector<Studentas> &tinginiai, int uzkl_2){
+    Timer rusiavimas;
+    if(uzkl_2 == 1 || uzkl_2 == 3){      /// Jei galutinis yra vidurkis arba vidurkis/mediana - skaiciuojama pagal vidurki
+        sort(grupe.begin(), grupe.end(), grupes_rik_pagal_vid);
+        for(size_t i=grupe.size();i>0;i--){
+            if(grupe[i-1].gal_vid<5.0){
+                tinginiai.push_back(grupe[i-1]);
+                grupe.pop_back();
+            } else
+                break;
         }
-    for(int i : correct)
-        if(input == i)
-            return;
-    cout << "Klaidinga ivestis. Turite ivesti viena is siu skaiciu: ";
-    for(int i=1;i<=(int)correct.size();i++)
-        if(correct.size()-i != 0)
-            cout << "'" << i << "', ";
-        else
-            cout << "'" << i << "'.\n";
-    int_input_check(input,correct);
+    }
+    if(uzkl_2 == 2){        /// Jei galutinis yra mediana - skaiciuojama pagal mediana
+        sort(grupe.begin(), grupe.end(), grupes_rik_pagal_med);
+        for(size_t i=grupe.size();i>0;i--){
+            if(grupe[i-1].gal_med<5.0){
+                tinginiai.push_back(grupe[i-1]);
+                grupe.pop_back();
+            } else
+                break;
+        }
+
+    }
+    cout << "Studentu rusiavimas i dvi grupes truko: "<< rusiavimas.elapsed() << "s\n";
 }
 
 void stud_ivest(vector<Studentas> &grupe, Studentas &temp, int uzkl_2){
@@ -74,8 +79,8 @@ void pild(Studentas &temp, int uzkl_2){
             cout << "Ivedete per daug pazymiu. Bus irasyti tik pirmi " << paz_skaicius << " pazymiai.\n";
             break;
         }
-        statistika(temp.paz);
-    } while(cin && temp.paz.size() < paz_skaicius || temp.paz.empty()); /// AR CIA VISKAS GERAI?
+        //statistika(temp.paz);
+    } while((temp.paz.size() < paz_skaicius) || temp.paz.empty()); /// AR CIA VISKAS GERAI?
     cin.clear();
     std::cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
     cout << "Iveskite egzamino paz. ";
@@ -120,7 +125,7 @@ void spausd(const Studentas &temp, int uzkl_2, int uzkl_1){
         cout<<setw(3)<<fixed<<setprecision(2)<<temp.gal_vid<<" / "<<temp.gal_med<<"\n";
         break;
     case 4:
-        for (int i = 0;i<10;i++) cout << setw(3) << temp.paz[i] << " ";
+        for (const auto &i: temp.paz) cout << setw(3) << i << " ";
         cout << right << setw(10+(paz_skaicius-temp.paz.size())*4) << "Egz.: " << temp.egz << endl;
         break;
     }
@@ -134,7 +139,7 @@ void gen_paz(int kelintas, int uzkl_2, Studentas &temp){
     temp.vardas = "Vardas" + to_string(kelintas);
     temp.pavarde = "Pavarde" + to_string(kelintas);
     temp.egz = dist_egz(_rnd);
-    for(int i=0;i<paz_skaicius;i++)
+    for(size_t i=0;i<paz_skaicius;i++)
         temp.paz.push_back(dist(_rnd));
     switch(uzkl_2){
     case 1:
@@ -176,6 +181,8 @@ void stud_gen(vector<Studentas> &grupe, Studentas &temp, int uzkl_2){
     }
 }
 
+///Pagalbines funkcijos/////////////////////////////////////////////////////////
+
 void vidurkis(Studentas &temp){
     double paz_suma = accumulate(temp.paz.begin(),temp.paz.end(),0.);
     temp.gal_vid = 0.6*temp.egz+0.4*paz_suma/paz_skaicius;
@@ -189,4 +196,46 @@ void mediana(Studentas &temp){
     else                /// jei pazymiu skaicius nelyginis
         med = temp.paz[temp.paz.size()/2];
     temp.gal_med = 0.4*med+0.6*temp.egz;
+}
+
+bool tik_raides(string name){
+    return !std::regex_match(name, std::regex("^[A-Za-z]+$"));
+}
+
+void int_input_check(int& input, vector<int> correct){
+    if (!(cin >> input)) {
+            cin.clear();
+            cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+        }
+    for(int i : correct)
+        if(input == i)
+            return;
+    cout << "Klaidinga ivestis. Turite ivesti viena is siu skaiciu: ";
+    for(size_t i=0;i<correct.size();i++)
+        if(correct.size()-i-1 != 0)
+            cout << "'" << correct[i] << "', ";
+        else
+            cout << "'" << correct[i] << "'.\n";
+    int_input_check(input,correct);
+}
+
+bool grupes_rik_pagal_varda(const Studentas &a, const Studentas &b){
+    if (a.pavarde == b.pavarde)
+        return a.vardas < b.vardas;
+    else
+        return a.pavarde < b.pavarde;
+}
+
+bool grupes_rik_pagal_vid(const Studentas &a, const Studentas &b){
+    if (a.gal_vid == b.gal_vid)
+        return a.gal_vid > b.gal_vid;
+    else
+        return a.gal_vid > b.gal_vid;
+}
+
+bool grupes_rik_pagal_med(const Studentas &a, const Studentas &b){
+    if (a.gal_med == b.gal_med)
+        return a.gal_med > b.gal_med;
+    else
+        return a.gal_med > b.gal_med;
 }

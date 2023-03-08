@@ -33,14 +33,12 @@ using std::getline;
 using std::stringstream;
 using std::ifstream;
 using std::ofstream;
-using std::exception;
-using std::cerr;
 using std::unique_ptr;
 using std::ostringstream;
 
 template <class T>
 void statistika (vector <T> &temp){
-    cout<<"\n vector size: "<<temp.size()<<" vector capacity: "<<temp.capacity()<<"\n";
+    cout<<" vector size: "<<temp.size()<<" vector capacity: "<<temp.capacity()<<"\n";
 }
 
 struct Studentas{
@@ -65,6 +63,7 @@ class Timer {
 
 bool tik_raides(string name);
 void int_input_check(int& input, vector<int> correct);
+void ting_moksl(vector<Studentas> &grupe, vector<Studentas> &tinginiai, int uzkl_2);
 void stud_ivest(vector<Studentas> &grupe, Studentas &temp, int uzkl_2);
 void pild(Studentas &temp, int uzkl_2);
 void spausd(const Studentas &temp, int uzkl_2, int uzkl_1);
@@ -72,5 +71,8 @@ void stud_gen(vector<Studentas> &grupe, Studentas &temp, int uzkl_2);
 void gen_paz(int kelintas, int uzkl_2, Studentas &temp);
 void mediana(Studentas &temp);
 void vidurkis(Studentas &temp);
+bool grupes_rik_pagal_varda(const Studentas &a, const Studentas &b);
+bool grupes_rik_pagal_vid(const Studentas &a, const Studentas &b);
+bool grupes_rik_pagal_med(const Studentas &a, const Studentas &b);
 
 #endif // MYLIB_H_INCLUDED
