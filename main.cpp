@@ -61,26 +61,38 @@ int main()
     } else {
         if(uzkl_5 == 0){
             Timer print;
-            spausd_i_faila(grupe,uzkl_1,uzkl_2,"studentai"+to_string(grupe.size())+".txt");
+            if(uzkl_2 == 4) /// Jeigu generuojami studentu pazymiai velesniam naudojimui
+                spausd_i_faila(grupe,uzkl_1,uzkl_2,"studentai"+to_string(grupe.size())+".txt");
+            else
+                spausd_i_faila(grupe,uzkl_1,uzkl_2,"output.txt");
             cout << "Studentu duomenu spausdinimas i faila uztruko: " << print.elapsed() << "s\n";
             visa_trukme += print.elapsed();
         }
         else {
             vector<Studentas> tinginiai;
-            tinginiai.reserve(1000000);
-            Timer rusiavimas;
+            Timer tinginiai_mokslinciai;
             ting_moksl(grupe,tinginiai,uzkl_2);
-            cout << "Studentu rusiavimas i dvi grupes truko: "<< rusiavimas.elapsed() << "s\n";
+            cout << "Studentu rusiavimas i dvi grupes truko: "<< tinginiai_mokslinciai.elapsed() << "s\n";
+            visa_trukme += tinginiai_mokslinciai.elapsed();
+            tinginiai.shrink_to_fit();
+            grupe.shrink_to_fit();
+            Timer rusiavimas;
+            if(uzkl_1 == 3){
+                sort(grupe.begin(), grupe.end(), grupes_rik_pagal_varda); /// padaryt vartotojui uzklausa, koki rikiavima jis nori naudot
+            }
+            cout << "Studentu rusiavimas didejimo tvarka uztruko: " << rusiavimas.elapsed() << "s\n";
             visa_trukme += rusiavimas.elapsed();
             Timer rus_spausd;
             spausd_i_faila(tinginiai,uzkl_1,uzkl_2,"output_tinginiai.txt");
             spausd_i_faila(grupe,uzkl_1,uzkl_2,"output_mokslinciai.txt");
             cout << "Surusiuotu studentu isvedimas i du failus uztruko: " << rus_spausd.elapsed() << "s\n";
             visa_trukme += rus_spausd.elapsed();
+            for(auto &i:tinginiai) i.paz.clear();
+                tinginiai.clear();
         }
     }
     for(auto &i:grupe) i.paz.clear();
-    grupe.clear();
+        grupe.clear();
     cout << "Visas programos darbas truko: "<< visa_trukme << "s\n";
     return 0;
 }

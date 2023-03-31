@@ -34,9 +34,34 @@
 ### Programos veikimo nuotrauka (v0.1): 
 ![image](https://user-images.githubusercontent.com/116343289/221123906-367b75ab-b0f9-49ac-924d-c2dc56dcebd6.png)
 
-### Programos generavimo spartos lentelė: <br>
+### Programos generavimo spartos lentelė (naudojant _vector_): <br>
 |                  **Studentų kiekis** | **1.000** | **10.000** | **100.000** | **1.000.000** | **10.000.000** |
 |-------------------------------------:|-----------|------------|-------------|---------------|----------------|
 | _Duomenų generavimas (laikas, s)_    | 0,002     | 0,006      | 0,056       | 0,484         | 5,229          |
 | _Spausdinimas į failą (laikas, s)_   | 0,003     | 0,013      | 0,112       | 1,082         | 10,332         |
 | _Visas programos darbas (laikas, s)_ | 0,005     | 0,019      | 0,168       | 1,566         | 15.561         |
+
+
+### Duomenų skaitymo spartos lentelė (naudojant _vector_): <br>
+|                               **Studentų kiekis** | **1.000** | **10.000** | **100.000** | **1.000.000** | **10.000.000** |
+|--------------------------------------------------:|-----------|------------|-------------|---------------|----------------|
+| _Skaitymas iš failo (laikas, s)_                  | 0.004     | 0.031      | 0.296       | 2.950         | 30.730         |
+| _Studentų rūšiavimas didėjimo tvarka (laikas, s)_ | 0.001     | 0.003      | 0.027       | 0.325         | 3.745         |
+| _Studentų rūšiavimas į dvi grupes (laikas, s)_    | 0.001     | 0.003      | 0.035       | 0.429         | 5.035         |
+| _Visas konteinerių darbas (laikas, s)_ 	        | 0.006     | 0.037      | 0.358       | 3.704         | 39.51         |
+
+### Duomenų skaitymo spartos lentelė (naudojant _list_): <br>
+|                               **Studentų kiekis** | **1.000** | **10.000** | **100.000** | **1.000.000** | **10.000.000** |
+|--------------------------------------------------:|-----------|------------|-------------|---------------|----------------|
+| _Skaitymas iš failo (laikas, s)_                  | 0.005     | 0.048      | 0.434       | 4.440         | 44.013         |
+| _Studentų rūšiavimas didėjimo tvarka (laikas, s)_ | 0.001     | 0.003      | 0.046       | 0.781         | 11.736         |
+| _Studentų rūšiavimas į dvi grupes (laikas, s)_    | 0.001     | 0.002      | 0.029       | 0.556         | 9.938          |
+| _Visas konteinerių darbas (laikas, s)_ 	        | 0.007     | 0.053      | 0.509       | 5.777         | 65.687         |
+
+### Duomenų skaitymo spartos lentelė (naudojant _deque_): <br>
+|                               **Studentų kiekis** | **1.000** | **10.000** | **100.000** | **1.000.000** | **10.000.000** |
+|--------------------------------------------------:|-----------|------------|-------------|---------------|----------------|
+| _Skaitymas iš failo (laikas, s)_                  | 0.005     | 0.037      | 0.360       | 3.488         | 35.975         |
+| _Studentų rūšiavimas didėjimo tvarka (laikas, s)_ | 0.001     | 0.005      | 0.067       | 2.438         | 11.276         |
+| _Studentų rūšiavimas į dvi grupes (laikas, s)_    | 0.001     | 0.010      | 0.134       | 1.858         | 24.836         |
+| _Visas konteinerių darbas (laikas, s)_ 	        | 0.007     | 0.052      | 0.561       | 7.784         | 72.087         |
