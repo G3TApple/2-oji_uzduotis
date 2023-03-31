@@ -13,16 +13,16 @@ void ting_moksl(list<Studentas> &grupe, list<Studentas> &tinginiai, int uzkl_2){
                 break;
         }
     }
-    /*if(uzkl_2 == 2){        /// Jei galutinis yra mediana - skaiciuojama pagal mediana
+    if(uzkl_2 == 2){        /// Jei galutinis yra mediana - skaiciuojama pagal mediana
         grupe.sort(grupes_rik_pagal_med);
-        for(size_t i=grupe.size();i>0;i--){
-            if(grupe[i-1].gal_med<5.0){
-                tinginiai.push_back(grupe[i-1]);
+        for(auto const& i:grupe){
+            if(i.gal_med<5.0){
+                tinginiai.push_back(i);
                 grupe.pop_back();
             } else
                 break;
         }
-    }*/
+    }
 }
 
 void stud_ivest(list<Studentas> &grupe, Studentas &temp, int uzkl_2){
