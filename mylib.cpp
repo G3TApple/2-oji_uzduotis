@@ -35,7 +35,6 @@ void stud_ivest(vector<Studentas> &grupe, Studentas &temp, int uzkl_2){
             cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
     }
     do{
-        if(grupe.size()==grupe.capacity()) grupe.reserve(1000);
         pild(temp,uzkl_2);
         grupe.push_back(temp);
         temp.paz.clear();
@@ -172,7 +171,6 @@ double stud_gen(vector<Studentas> &grupe, Studentas &temp, int uzkl_2){
         }
     Timer gen;
     for(int i=0;i<stud_sk;i++){
-        if(grupe.size()==grupe.capacity()) grupe.reserve(1000);
         gen_paz(i,uzkl_2,temp);
         grupe.push_back(temp);
         temp.paz.clear();

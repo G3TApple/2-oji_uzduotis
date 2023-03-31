@@ -63,8 +63,6 @@ double failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
 }
 
 void spausd_i_faila(vector<Studentas>& grupe, int uzkl_1, int uzkl_2, string filename){
-    //if(uzkl_1 == 3)
-        //sort(grupe.begin(), grupe.end(), grupes_rik_pagal_varda); /// padaryt vartotojui uzklausa, koki rikiavima jis nori naudot
     ofstream fr (filename);
     unique_ptr<ostringstream> oss(new ostringstream());
     (*oss) <<left<<setw(15)<<"Vardas"<<setw(20)<<"Pavarde";
