@@ -65,3 +65,9 @@
 | _Studentų rūšiavimas didėjimo tvarka (laikas, s)_ | 0.001     | 0.005      | 0.067       | 2.438         | 11.276         |
 | _Studentų rūšiavimas į dvi grupes (laikas, s)_    | 0.001     | 0.010      | 0.134       | 1.858         | 24.836         |
 | _Visas konteinerių darbas (laikas, s)_ 	        | 0.007     | 0.052      | 0.561       | 7.784         | 72.087         |
+
+
+Naudojamo kompiuterio specifikacijos:
+CPU: AMD Ryzen 7 2700X 3.70 GHz 8c/16t
+RAM: Corsair 2x8GB DDR4 3200MHz
+Storage: Samsung 970 EVO Plus SSD 500GB NVMe M.2 (read/write - 3,500/3,300 MB/s)
