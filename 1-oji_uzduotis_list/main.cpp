@@ -5,7 +5,7 @@ size_t paz_skaicius;
 
 int main()
 {
-    int uzkl_1 = -1, uzkl_2 = -1, uzkl_3 = -1, uzkl_4 = -1, uzkl_5 = -1;
+    int uzkl_1 = -1, uzkl_2 = -1, uzkl_3 = -1, uzkl_4 = -1, uzkl_5 = -1, uzkl_6 = -1;
     list<Studentas> grupe;
     Studentas temp;
     double visa_trukme = 0;
@@ -20,6 +20,10 @@ int main()
     if(uzkl_1 == 3 || uzkl_3 == 2){
         cout << "\nAr norite skirstyti studentus i mokslincius ir tinginius? Iveskite '1', jei taip, '0', jei ne.\n";
         int_input_check(uzkl_5,(vector<int>){1, 0});
+    }
+    if(uzkl_5 == 1){
+        cout << "\nIveskite '1', jei norite naudoti 1 strategija (du nauji konteineriai) arba '2', jei norite naudoti 2 strategija (vienas naujas konteineris).\n";
+        int_input_check(uzkl_6,(vector<int>){1, 2});
     }
     switch(uzkl_1){
     case 1:
@@ -68,26 +72,8 @@ int main()
             cout << "Studentu duomenu spausdinimas i faila uztruko: " << print.elapsed() << "s\n";
             visa_trukme += print.elapsed();
         }
-        else {
-            list<Studentas> tinginiai;
-            Timer tinginiai_mokslinciai;
-            ting_moksl(grupe,tinginiai,uzkl_2);
-            cout << "Studentu rusiavimas i dvi grupes truko: "<< tinginiai_mokslinciai.elapsed() << "s\n";
-            visa_trukme += tinginiai_mokslinciai.elapsed();
-            Timer rusiavimas;
-            if(uzkl_1 == 3){
-                grupe.sort(grupes_rik_pagal_varda); /// padaryt vartotojui uzklausa, koki rikiavima jis nori naudot
-            }
-            cout << "Studentu rusiavimas didejimo tvarka uztruko: " << rusiavimas.elapsed() << "s\n";
-            visa_trukme += rusiavimas.elapsed();
-            Timer rus_spausd;
-            spausd_i_faila(tinginiai,uzkl_1,uzkl_2,"output_tinginiai.txt");
-            spausd_i_faila(grupe,uzkl_1,uzkl_2,"output_mokslinciai.txt");
-            cout << "Surusiuotu studentu isvedimas i du failus uztruko: " << rus_spausd.elapsed() << "s\n";
-            visa_trukme += rus_spausd.elapsed();
-            for(auto &i:tinginiai) i.paz.clear();
-                tinginiai.clear();
-        }
+        else
+            skirstymas(uzkl_6,uzkl_2,uzkl_1,grupe,visa_trukme);
     }
     for(auto &i:grupe) i.paz.clear();
         grupe.clear();

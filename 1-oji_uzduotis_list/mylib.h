@@ -61,7 +61,7 @@ class Timer {
 
 bool tik_raides(string name);
 void int_input_check(int& input, vector<int> correct);
-void ting_moksl(list<Studentas> &grupe, list<Studentas> &tinginiai, int uzkl_2);
+void skirstymas(int& uzkl_6, int& uzkl_2, int& uzkl_1, list<Studentas>& grupe, double& visa_trukme);
 void stud_ivest(list<Studentas> &grupe, Studentas &temp, int uzkl_2);
 void pild(Studentas &temp, int uzkl_2);
 void spausd(const Studentas &temp, int uzkl_2, int uzkl_1);

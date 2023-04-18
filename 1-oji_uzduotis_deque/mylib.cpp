@@ -1,28 +1,88 @@
 #include "mylib.h"
+#include "file_functions.h"
 
 extern size_t paz_skaicius;
 
-void ting_moksl(deque<Studentas> &grupe, deque<Studentas> &tinginiai, int uzkl_2){
-    if(uzkl_2 == 1 || uzkl_2 == 3){      /// Jei galutinis yra vidurkis arba vidurkis/mediana - skaiciuojama pagal vidurki
-        sort(grupe.begin(), grupe.end(), grupes_rik_pagal_vid);
-        for(size_t i=grupe.size();i>0;i--){
-            if(grupe[i-1].gal_vid<5.0){
-                tinginiai.push_back(grupe[i-1]);
-                grupe.pop_back();
-            } else
-                break;
+void skirstymas(int& uzkl_6, int& uzkl_2, int& uzkl_1, deque<Studentas>& grupe, double& visa_trukme){
+    if(uzkl_6 == 1) {       /// Jei du nauji konteineriai
+        deque<Studentas> tinginiai, mokslinciai;
+        Timer tinginiai_mokslinciai;
+
+        if(uzkl_2 == 1 || uzkl_2 == 3){      /// skaiciuojama pagal vidurki, jei galutinis yra vidurkis arba vidurkis/mediana
+            sort(grupe.begin(), grupe.end(), grupes_rik_pagal_vid);
+            for(size_t i=grupe.size();i>0;i--){
+                if(grupe[i-1].gal_vid<5.0)
+                    tinginiai.push_back(grupe[i-1]);
+                else
+                    mokslinciai.push_back(grupe[i-1]);
+            }
         }
-    }
-    if(uzkl_2 == 2){        /// Jei galutinis yra mediana - skaiciuojama pagal mediana
-        sort(grupe.begin(), grupe.end(), grupes_rik_pagal_med);
-        for(size_t i=grupe.size();i>0;i--){
-            if(grupe[i-1].gal_med<5.0){
-                tinginiai.push_back(grupe[i-1]);
-                grupe.pop_back();
-            } else
-                break;
+        if(uzkl_2 == 2){        /// skaiciuojama pagal mediana, jei galutinis yra mediana
+            sort(grupe.begin(), grupe.end(), grupes_rik_pagal_med);
+            for(size_t i=grupe.size();i>0;i--){
+                if(grupe[i-1].gal_med<5.0)
+                    tinginiai.push_back(grupe[i-1]);
+                else
+                    mokslinciai.push_back(grupe[i-1]);
+            }
         }
+        cout << "Studentu rusiavimas i dvi grupes truko: "<< tinginiai_mokslinciai.elapsed() << "s\n";
+        visa_trukme += tinginiai_mokslinciai.elapsed();
+        tinginiai.shrink_to_fit();
+        mokslinciai.shrink_to_fit();
+        Timer rusiavimas;
+        sort(tinginiai.begin(), tinginiai.end(), grupes_rik_pagal_varda);
+        sort(mokslinciai.begin(), mokslinciai.end(), grupes_rik_pagal_varda);
+        cout << "Studentu rusiavimas didejimo tvarka uztruko: " << rusiavimas.elapsed() << "s\n";
+        visa_trukme += rusiavimas.elapsed();
+        Timer rus_spausd;
+        spausd_i_faila(tinginiai,uzkl_1,uzkl_2,"output_tinginiai.txt");
+        spausd_i_faila(mokslinciai,uzkl_1,uzkl_2,"output_mokslinciai.txt");
+        cout << "Surusiuotu studentu isvedimas i du failus uztruko: " << rus_spausd.elapsed() << "s\n";
+        visa_trukme += rus_spausd.elapsed();
+        for(auto &i:tinginiai) i.paz.clear();
+        tinginiai.clear();
+        for(auto &i:mokslinciai) i.paz.clear();
+        mokslinciai.clear();
+    } else {        /// Jei vienas naujas konteineris
+        deque<Studentas> tinginiai;
+        Timer tinginiai_mokslinciai;
+        if(uzkl_2 == 1 || uzkl_2 == 3){      /// Jei galutinis yra vidurkis arba vidurkis/mediana - skaiciuojama pagal vidurki
+            sort(grupe.begin(), grupe.end(), grupes_rik_pagal_vid);
+            for(size_t i=grupe.size();i>0;i--){
+                if(grupe[i-1].gal_vid<5.0){
+                    tinginiai.push_back(grupe[i-1]);
+                    grupe.pop_back();
+                }
+            }
+        }
+        if(uzkl_2 == 2){        /// Jei galutinis yra mediana - skaiciuojama pagal mediana
+            sort(grupe.begin(), grupe.end(), grupes_rik_pagal_med);
+            for(size_t i=grupe.size();i>0;i--){
+                if(grupe[i-1].gal_med<5.0){
+                    tinginiai.push_back(grupe[i-1]);
+                    grupe.pop_back();
+                }
+            }
+        }
+        cout << "Studentu rusiavimas i dvi grupes truko: "<< tinginiai_mokslinciai.elapsed() << "s\n";
+        visa_trukme += tinginiai_mokslinciai.elapsed();
+        tinginiai.shrink_to_fit();
+        grupe.shrink_to_fit();
+        Timer rusiavimas;
+        sort(grupe.begin(), grupe.end(), grupes_rik_pagal_varda);
+        sort(tinginiai.begin(), tinginiai.end(), grupes_rik_pagal_varda);
+        cout << "Studentu rusiavimas didejimo tvarka uztruko: " << rusiavimas.elapsed() << "s\n";
+        visa_trukme += rusiavimas.elapsed();
+        Timer rus_spausd;
+        spausd_i_faila(tinginiai,uzkl_1,uzkl_2,"output_tinginiai.txt");
+        spausd_i_faila(grupe,uzkl_1,uzkl_2,"output_mokslinciai.txt");
+        cout << "Surusiuotu studentu isvedimas i du failus uztruko: " << rus_spausd.elapsed() << "s\n";
+        visa_trukme += rus_spausd.elapsed();
+        for(auto &i:tinginiai) i.paz.clear();
+        tinginiai.clear();
     }
+
 }
 
 void stud_ivest(deque<Studentas> &grupe, Studentas &temp, int uzkl_2){

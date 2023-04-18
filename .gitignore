@@ -1,8 +1,8 @@
 # Prerequisites
 *.d
 
-bin/
-obj/
+*/bin
+*/obj
 
 # Compiled Object files
 *.slo

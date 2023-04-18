@@ -1,28 +1,83 @@
 #include "mylib.h"
+#include "file_functions.h"
 
 extern size_t paz_skaicius;
 
-void ting_moksl(list<Studentas> &grupe, list<Studentas> &tinginiai, int uzkl_2){
-    if(uzkl_2 == 1 || uzkl_2 == 3){      /// Jei galutinis yra vidurkis arba vidurkis/mediana - skaiciuojama pagal vidurki
-        grupe.sort(grupes_rik_pagal_vid);
-        for(auto const& i:grupe){
-            if(i.gal_vid<5.0){
-                tinginiai.push_back(i);
-                grupe.pop_back();
-            } else
-                break;
+
+void skirstymas(int& uzkl_6, int& uzkl_2, int& uzkl_1, list<Studentas>& grupe, double& visa_trukme){
+    if(uzkl_6 == 1) {       /// Jei du nauji konteineriai
+        list<Studentas> tinginiai, mokslinciai;
+        Timer tinginiai_mokslinciai;
+
+        if(uzkl_2 == 1 || uzkl_2 == 3){      /// Jei galutinis yra vidurkis arba vidurkis/mediana - skaiciuojama pagal vidurki
+            grupe.sort(grupes_rik_pagal_vid);
+            for(auto const& i:grupe){
+                if(i.gal_vid<5.0){
+                    tinginiai.push_back(i);
+                }
+            }
         }
-    }
-    if(uzkl_2 == 2){        /// Jei galutinis yra mediana - skaiciuojama pagal mediana
-        grupe.sort(grupes_rik_pagal_med);
-        for(auto const& i:grupe){
-            if(i.gal_med<5.0){
-                tinginiai.push_back(i);
-                grupe.pop_back();
-            } else
-                break;
+        if(uzkl_2 == 2){        /// Jei galutinis yra mediana - skaiciuojama pagal mediana
+            grupe.sort(grupes_rik_pagal_med);
+            for(auto const& i:grupe){
+                if(i.gal_vid<5.0){
+                    mokslinciai.push_back(i);
+                }
+            }
         }
+        cout << "Studentu rusiavimas i dvi grupes truko: "<< tinginiai_mokslinciai.elapsed() << "s\n";
+        visa_trukme += tinginiai_mokslinciai.elapsed();
+        Timer rusiavimas;
+        tinginiai.sort(grupes_rik_pagal_varda);
+        mokslinciai.sort(grupes_rik_pagal_varda);
+        cout << "Studentu rusiavimas didejimo tvarka uztruko: " << rusiavimas.elapsed() << "s\n";
+        visa_trukme += rusiavimas.elapsed();
+        Timer rus_spausd;
+        spausd_i_faila(tinginiai,uzkl_1,uzkl_2,"output_tinginiai.txt");
+        spausd_i_faila(mokslinciai,uzkl_1,uzkl_2,"output_mokslinciai.txt");
+        cout << "Surusiuotu studentu isvedimas i du failus uztruko: " << rus_spausd.elapsed() << "s\n";
+        visa_trukme += rus_spausd.elapsed();
+        for(auto &i:tinginiai) i.paz.clear();
+        tinginiai.clear();
+        for(auto &i:mokslinciai) i.paz.clear();
+        mokslinciai.clear();
+    } else {        /// Jei vienas naujas konteineris
+        list<Studentas> tinginiai;
+        Timer tinginiai_mokslinciai;
+        if(uzkl_2 == 1 || uzkl_2 == 3){      /// Jei galutinis yra vidurkis arba vidurkis/mediana - skaiciuojama pagal vidurki
+            grupe.sort(grupes_rik_pagal_vid);
+            for(auto const& i:grupe){
+                if(i.gal_vid<5.0){
+                    tinginiai.push_back(i);
+                    grupe.pop_back();
+                }
+            }
+        }
+        if(uzkl_2 == 2){        /// Jei galutinis yra mediana - skaiciuojama pagal mediana
+            grupe.sort(grupes_rik_pagal_med);
+            for(auto const& i:grupe){
+                if(i.gal_vid<5.0){
+                    tinginiai.push_back(i);
+                    grupe.pop_back();
+                }
+            }
+        }
+        cout << "Studentu rusiavimas i dvi grupes truko: "<< tinginiai_mokslinciai.elapsed() << "s\n";
+        visa_trukme += tinginiai_mokslinciai.elapsed();
+        Timer rusiavimas;
+        tinginiai.sort(grupes_rik_pagal_varda);
+        grupe.sort(grupes_rik_pagal_varda);
+        cout << "Studentu rusiavimas didejimo tvarka uztruko: " << rusiavimas.elapsed() << "s\n";
+        visa_trukme += rusiavimas.elapsed();
+        Timer rus_spausd;
+        spausd_i_faila(tinginiai,uzkl_1,uzkl_2,"output_tinginiai.txt");
+        spausd_i_faila(grupe,uzkl_1,uzkl_2,"output_mokslinciai.txt");
+        cout << "Surusiuotu studentu isvedimas i du failus uztruko: " << rus_spausd.elapsed() << "s\n";
+        visa_trukme += rus_spausd.elapsed();
+        for(auto &i:tinginiai) i.paz.clear();
+        tinginiai.clear();
     }
+
 }
 
 void stud_ivest(list<Studentas> &grupe, Studentas &temp, int uzkl_2){
