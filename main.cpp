@@ -78,5 +78,5 @@ int main()
     for(auto &i:grupe) i.paz.clear();
         grupe.clear();
     cout << "Visas programos darbas truko: "<< visa_trukme << "s\n";
-    return 0;
+    system("pause");
 }

@@ -2,26 +2,25 @@
 
 ### **Programa, skirta studentų galutinio balo skaičiavimui.**
 
-- Programa leidžia pasirinkti įvesti duomenis vartotojui, duomenis generuoti automatiškai arba nuskaityti duomenis iš failo. Toliau galima pasirinkti generuoti vidurkį, medianą, vidurkį ir medianą arba spausdinti visus pažymius (tik įvedant arba generuojant duomenis).
-
 **Duomenų įvedimas ranka:**
-1. Vartotojas turi įvesti didžiausią įmanomą pažymių skaičių. 
-2. Toliau programa prašo įvesti studento vardą ir pavardę bei gautus pažymius. Norint nutraukti pažymių vedimą, neįvedus maksimalaus pažymių skaičiaus, galima įvesti bet kokį simbolį vietoj pažymio. Tuomet išsaugota bus tik tiek pažymių, kiek įvedė vartotojas. Įvedus pažymius prašoma įvesti egzamino pažymį.
+1. Įveskite didžiausią įmanomą pažymių skaičių. 
+2. Toliau įveskite studento vardą ir pavardę bei gautus pažymius. Norėdami nutraukti pažymių vedimą, įveskite bet kokį simbolį vietoj pažymio. Tuomet išsaugota bus tik tiek pažymių, kiek įvedėte. Įvedus pažymius prašoma įvesti egzamino pažymį.
 3. Galima pasirinkti - vesti dar vieno studento duomenis arba baigti įvedimą.
 4. Baigus įvedimą, į ekraną išvedamas galutinis balas. 
 5. Po išvedimo suteikiamas pasirinkimas papildomai išvesti ir visus pažymius, jei jie dar nebuvo išvesti.
 
 <br>**Duomenų generavimas:**
-1. Vartotojas turi įvesti, kiek studentų nori generuoti. Toliau turi įvesti, kiek daugiausia pažymių nori skirti kiekvienam studentui.
-2. Baigus įvedimą, programa išveda sugeneruotus vardus, pavardes bei pažymius arba galutinius pažymius.
-3. Po išvedimo suteikiamas pasirinkimas papildomai išvesti ir visus pažymius, jei jie dar nebuvo išvesti.
+1. Pasirinkite - skaičiuoti vidurkį, medianą, abu ar spausdinti pažymius.
+2. Tada pasirinkite, ar norite išvesti rezultatus į ekraną, ar į failą
+3. Toliau pasirinkite, ar norite skirstyti studentus į mokslinčius ir tinginius, ar ne. Pasirinkę „Taip“ galite rinktis iš dviejų skirstymo strategijų.
+4. Įveskite, kiek studentų norite generuoti. Vėliau įveskite, kiek daugiausia pažymių norite skirti kiekvienam studentui.
+5. Baigus įvedimą, programa išveda sugeneruotus vardus, pavardes bei pažymius arba galutinius pažymius.
 
 <br>**Duomenų nuskaitymas iš failo**
-1. Vartotojui parodomi pasiekiami tekstiniai failai. Pasirinkęs norimą vartotojas turi įvesti jo pavadinimą.
-2. Nuskaitant duomenis iš failo automatiškai suskaičiuojama, kiek pažymių gavo studentai, jei duomenų failas suformatuotas teisingai.
-3. Baigus įvedimą, programa į failą išveda sugeneruotus vardus, pavardes bei pažymius arba galutinius pažymius.
-4. Po išvedimo suteikiamas pasirinkimas papildomai išvesti ir visus pažymius, jei jie dar nebuvo išvesti.
-
+1. Pasirinkite - skaičiuoti vidurkį, medianą, abu ar spausdinti pažymius.
+2. Tada pasirinkite, ar skirstyti studentus į mokslinčius ir tinginius, ar ne. Pasirinkę „Taip“ galite rinktis iš dviejų skirstymo strategijų.
+3. Parodomi pasiekiami tekstiniai failai - pasirinkę norimą turite įvesti jo pavadinimą (nuskaitant duomenis iš failo automatiškai suskaičiuojama, kiek pažymių gavo studentai, jei duomenų failas suformatuotas teisingai).
+4. Programa į failą išveda sugeneruotus vardus, pavardes bei pažymius arba galutinius pažymius.
 
 
 - Visada, kai vartotojui leidžiama įvesti duomenis, juos įvedus programa tikrina, ar duomenys teisingi. Jei ne - pateikia atitinkamą pranešimą.
@@ -34,7 +33,7 @@
 ### Programos veikimo nuotrauka (v0.1): 
 ![image](https://user-images.githubusercontent.com/116343289/221123906-367b75ab-b0f9-49ac-924d-c2dc56dcebd6.png)
 
-### Programos generavimo spartos lentelė (naudojant _vector_): <br>
+### Studentų generavimo spartos lentelė (naudojant _vector_): <br>
 |                  **Studentų kiekis** | **1.000** | **10.000** | **100.000** | **1.000.000** | **10.000.000** |
 |-------------------------------------:|-----------|------------|-------------|---------------|----------------|
 | _Duomenų generavimas (laikas, s)_    | 0,002     | 0,006      | 0,056       | 0,484         | 5,229          |
@@ -66,6 +65,24 @@
 | _Studentų rūšiavimas į dvi grupes (laikas, s)_    | 0.001     | 0.010      | 0.134       | 1.858         | 24.836         |
 | _Visas konteinerių darbas (laikas, s)_ 	        | 0.007     | 0.052      | 0.561       | 7.784         | 72.087         |
 
+
+### Programos veikimo spartos lentelė, priklausomai nuo studentų dalijimo strategijos: **(su 1 mln. studentų)** <br>
+
+|          | **1 strategija** | **RAM apkrova** | 	| **2 strategija** | **RAM apkrova** |
+|----------|------------------|-----------------| 	|------------------|-----------------|
+| _Vector_ | 3.98s            | 363MB           | 	| 4.01s            | 175MB           |
+| _Deque_  | 6.78s            | 1584MB          | 	| 6.44s            | 926MB           |
+| _List_   | 6.15s            | 621MB           | 	| 5.62s            | 523MB           |
+
+### Programos veikimo spartos lentelė, priklausomai nuo studentų dalijimo strategijos: **(su 10 mln. studentų)** <br>
+
+|          | **1 strategija** | **RAM apkrova** | 	| **2 strategija** | **RAM apkrova** |
+|----------|------------------|-----------------| 	|------------------|-----------------|
+| _Vector_ | 51.00s           | 3640MB          | 	| 49.91s           | 2361MB          |
+| _Deque_  | 104.763s         | *12062MB\**     | 	| 82.07s           | 9415MB          |
+| _List_   | 62.81s           | 4490MB          | 	| 73.11s           | 6193MB          |
+
+*naudojamą atmintį limituoja kompiuteris
 
 Naudojamo kompiuterio specifikacijos:
 - CPU: AMD Ryzen 7 2700X 3.70 GHz 8c/16t

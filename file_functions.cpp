@@ -4,40 +4,40 @@
 extern int paz_skaicius;
 
 double failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
-    paz_skaicius = 0;
+    paz_skaicius = -3;
     Studentas temp;
     string eilute, eilute2, readfile, zodis;
+    int p;
     cout << "Pasiekiami failai:\n";
     cout << "-----------------------\n";
     system("dir /B *.txt");
     cout << "-----------------------\nIveskite failo pavadinima, is kurio norite nuskaityti duomenis: ";
-    cin >> readfile;
     ifstream fd;
-    try{
+    while(1){
+        cin >> readfile;
         fd.open(readfile);
-        if(!fd.good())
-            throw std::runtime_error("Toks failas nerastas.");
-    } catch (const std::exception& e){
-        std::cerr << "Klaida: " << e.what() << endl;
-        return 1;
+        if(!(fd.good()))
+            cout << "Toks failas nerastas. Bandykite dar karta. \n";
+        else
+            break;
     }
-    int p;
+
     Timer t;
-    getline(fd,eilute);  ///Pazymiu kiekio skaiciavimas
+    getline(fd,eilute);
     stringstream s(eilute);
     while(s >> zodis)
         paz_skaicius++;
-    paz_skaicius -= 3;
-    if(paz_skaicius != 0){
-        while(!(fd.eof())){
-            getline(fd, eilute2);
-            stringstream ss(eilute2);
-            ss >> temp.vardas >> temp.pavarde;
+    getline(fd,eilute);
+    if(paz_skaicius > 0){
+        stringstream buf;
+        buf << fd.rdbuf();
+        while(buf >> temp.vardas ){
+            buf >> temp.pavarde;
             for(int i=0;i<paz_skaicius;i++){
-                ss>>p;
+                buf >> p;
                 temp.paz.push_back(p);
             }
-            ss>>temp.egz;
+            buf >> temp.egz;
             switch(uzkl_2){
             case 1:
                 vidurkis(temp);
@@ -55,8 +55,50 @@ double failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
             grupe.push_back(temp);
             temp.paz.clear();
         }
-    } else
+    } else {
         cout << "Klaida: duomenu faile nerasta pazymiu.";
+        exit(0);
+    }
+
+
+//    Timer t;
+//    getline(fd,eilute);  ///Pazymiu kiekio skaiciavimas
+//    stringstream s(eilute);
+//    while(s >> zodis)
+//        paz_skaicius++;
+//    paz_skaicius -= 3;
+//    getline(fd,eilute);
+//    if(paz_skaicius > 0){
+//        while(!(fd.eof())){
+//            getline(fd, eilute2);
+//            stringstream ss(eilute2);
+//            ss >> temp.vardas >> temp.pavarde;
+//            for(int i=0;i<paz_skaicius;i++){
+//                ss>>p;
+//                temp.paz.push_back(p);
+//            }
+//            ss>>temp.egz;
+//            switch(uzkl_2){
+//            case 1:
+//                vidurkis(temp);
+//                break;
+//            case 2:
+//                mediana(temp);
+//                break;
+//            case 3:
+//                vidurkis(temp);
+//                mediana(temp);
+//                break;
+//            case 4:
+//                break;
+//            }
+//            grupe.push_back(temp);
+//            temp.paz.clear();
+//        }
+//    } else {
+//        cout << "Klaida: duomenu faile nerasta pazymiu.";
+//        exit(0);
+//    }
     cout << "Skaitymas is failo uztruko: "<< t.elapsed() << "s\n";
     fd.close();
     return t.elapsed();

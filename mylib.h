@@ -35,6 +35,11 @@ using std::ifstream;
 using std::ofstream;
 using std::unique_ptr;
 using std::ostringstream;
+using std::istringstream;
+using std::partition;
+using std::find_if;
+using std::copy;
+using std::move;
 
 template <class T>
 void statistika (vector <T> &temp){

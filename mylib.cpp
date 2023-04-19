@@ -3,28 +3,29 @@
 
 extern size_t paz_skaicius;
 
+
 void skirstymas(int& uzkl_6, int& uzkl_2, int& uzkl_1, vector<Studentas>& grupe, double& visa_trukme){
     if(uzkl_6 == 1) {       /// Jei du nauji konteineriai
         vector<Studentas> tinginiai, mokslinciai;
         Timer tinginiai_mokslinciai;
 
-        if(uzkl_2 == 1 || uzkl_2 == 3){      /// skaiciuojama pagal vidurki, jei galutinis yra vidurkis arba vidurkis/mediana
-            sort(grupe.begin(), grupe.end(), grupes_rik_pagal_vid);
-            for(size_t i=grupe.size();i>0;i--){
-                if(grupe[i-1].gal_vid<5.0)
-                    tinginiai.push_back(grupe[i-1]);
-                else
-                    mokslinciai.push_back(grupe[i-1]);
-            }
+        if(uzkl_2 == 1 || uzkl_2 == 3){     /// skaiciuojama pagal vidurki, jei galutinis yra vidurkis arba vidurkis/mediana
+            partition(grupe.begin(), grupe.end(), [](Studentas s)
+            {
+                return s.gal_vid>5.0;
+            });
+            auto it = std::find_if(grupe.begin(), grupe.end(), [](const Studentas& s) { return s.gal_vid<5.0; });
+            tinginiai = {it, grupe.end()};
+            mokslinciai = {grupe.begin(), it};
         }
         if(uzkl_2 == 2){        /// skaiciuojama pagal mediana, jei galutinis yra mediana
-            sort(grupe.begin(), grupe.end(), grupes_rik_pagal_med);
-            for(size_t i=grupe.size();i>0;i--){
-                if(grupe[i-1].gal_med<5.0)
-                    tinginiai.push_back(grupe[i-1]);
-                else
-                    mokslinciai.push_back(grupe[i-1]);
-            }
+            partition(grupe.begin(), grupe.end(), [](Studentas s)
+            {
+                return s.gal_med>5.0;
+            });
+            auto it = std::find_if(grupe.begin(), grupe.end(), [](const Studentas& s) { return s.gal_med<5.0; });
+            tinginiai = {it, grupe.end()};
+            mokslinciai = {grupe.begin(), it};
         }
         cout << "Studentu rusiavimas i dvi grupes truko: "<< tinginiai_mokslinciai.elapsed() << "s\n";
         visa_trukme += tinginiai_mokslinciai.elapsed();
@@ -48,22 +49,22 @@ void skirstymas(int& uzkl_6, int& uzkl_2, int& uzkl_1, vector<Studentas>& grupe,
         vector<Studentas> tinginiai;
         Timer tinginiai_mokslinciai;
         if(uzkl_2 == 1 || uzkl_2 == 3){      /// Jei galutinis yra vidurkis arba vidurkis/mediana - skaiciuojama pagal vidurki
-            sort(grupe.begin(), grupe.end(), grupes_rik_pagal_vid);
-            for(size_t i=grupe.size();i>0;i--){
-                if(grupe[i-1].gal_vid<5.0){
-                    tinginiai.push_back(grupe[i-1]);
-                    grupe.pop_back();
-                }
-            }
+            partition(grupe.begin(), grupe.end(), [](Studentas s)
+            {
+                return s.gal_vid>5.0;
+            });
+            auto it = std::find_if(grupe.begin(), grupe.end(), [](const Studentas& s) { return s.gal_vid<5.0; });
+            tinginiai = {it, grupe.end()};
+            grupe.erase(it, grupe.end());
         }
         if(uzkl_2 == 2){        /// Jei galutinis yra mediana - skaiciuojama pagal mediana
-            sort(grupe.begin(), grupe.end(), grupes_rik_pagal_med);
-            for(size_t i=grupe.size();i>0;i--){
-                if(grupe[i-1].gal_med<5.0){
-                    tinginiai.push_back(grupe[i-1]);
-                    grupe.pop_back();
-                }
-            }
+            partition(grupe.begin(), grupe.end(), [](Studentas s)
+            {
+                return s.gal_med>5.0;
+            });
+            auto it = std::find_if(grupe.begin(), grupe.end(), [](const Studentas& s) { return s.gal_med<5.0; });
+            tinginiai = {it, grupe.end()};
+            grupe.erase(it, grupe.end());
         }
         cout << "Studentu rusiavimas i dvi grupes truko: "<< tinginiai_mokslinciai.elapsed() << "s\n";
         visa_trukme += tinginiai_mokslinciai.elapsed();
@@ -82,7 +83,6 @@ void skirstymas(int& uzkl_6, int& uzkl_2, int& uzkl_1, vector<Studentas>& grupe,
         for(auto &i:tinginiai) i.paz.clear();
         tinginiai.clear();
     }
-
 }
 
 void stud_ivest(vector<Studentas> &grupe, Studentas &temp, int uzkl_2){
@@ -282,18 +282,4 @@ bool grupes_rik_pagal_varda(const Studentas &a, const Studentas &b){
         return a.vardas < b.vardas;
     else
         return a.pavarde < b.pavarde;
-}
-
-bool grupes_rik_pagal_vid(const Studentas &a, const Studentas &b){
-    if (a.gal_vid == b.gal_vid)
-        return a.gal_vid > b.gal_vid;
-    else
-        return a.gal_vid > b.gal_vid;
-}
-
-bool grupes_rik_pagal_med(const Studentas &a, const Studentas &b){
-    if (a.gal_med == b.gal_med)
-        return a.gal_med > b.gal_med;
-    else
-        return a.gal_med > b.gal_med;
 }
