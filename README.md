@@ -40,7 +40,7 @@
 | _Spausdinimas į failą (laikas, s)_   | 0,003     | 0,013      | 0,112       | 1,082         | 10,332         |
 | _Visas programos darbas (laikas, s)_ | 0,005     | 0,019      | 0,168       | 1,566         | 15.561         |
 
-
+---
 ### Duomenų skaitymo spartos lentelė (naudojant _vector_): <br>
 |                               **Studentų kiekis** | **1.000** | **10.000** | **100.000** | **1.000.000** | **10.000.000** |
 |--------------------------------------------------:|-----------|------------|-------------|---------------|----------------|
@@ -65,11 +65,11 @@
 | _Studentų rūšiavimas į dvi grupes (laikas, s)_    | 0.001     | 0.010      | 0.134       | 1.858         | 24.836         |
 | _Visas konteinerių darbas (laikas, s)_ 	        | 0.007     | 0.052      | 0.561       | 7.784         | 72.087         |
 
-
+---
 ### Programos veikimo spartos lentelė, priklausomai nuo studentų dalijimo strategijos: **(su 1 mln. studentų)** <br>
 
 |          | **1 strategija** | **RAM apkrova** | 	| **2 strategija** | **RAM apkrova** |
-|----------|------------------|-----------------| 	|------------------|-----------------|
+|----------|------------------|-----------------|---|------------------|-----------------|
 | _Vector_ | 3.98s            | 363MB           | 	| 4.01s            | 175MB           |
 | _Deque_  | 6.78s            | 1584MB          | 	| 6.44s            | 926MB           |
 | _List_   | 6.15s            | 621MB           | 	| 5.62s            | 523MB           |
@@ -77,7 +77,7 @@
 ### Programos veikimo spartos lentelė, priklausomai nuo studentų dalijimo strategijos: **(su 10 mln. studentų)** <br>
 
 |          | **1 strategija** | **RAM apkrova** | 	| **2 strategija** | **RAM apkrova** |
-|----------|------------------|-----------------| 	|------------------|-----------------|
+|----------|------------------|-----------------|---|------------------|-----------------|
 | _Vector_ | 51.00s           | 3640MB          | 	| 49.91s           | 2361MB          |
 | _Deque_  | 104.763s         | *12062MB\**     | 	| 82.07s           | 9415MB          |
 | _List_   | 62.81s           | 4490MB          | 	| 73.11s           | 6193MB          |
@@ -88,3 +88,37 @@ Naudojamo kompiuterio specifikacijos:
 - CPU: AMD Ryzen 7 2700X 3.70 GHz 8c/16t
 - RAM: Corsair 2x8GB DDR4 3200MHz
 - Storage: Samsung 970 EVO Plus SSD 500GB NVMe M.2 (read/write - 3,500/3,300 MB/s)
+
+---
+
+## v1.0
+- Sukurtos dvi skirstymo į dvi grupes strategijos
+- Pašalintos funkcijos, skirtos rikiavimui pagal vidurkį ir medianą
+- Nuo šiol su vektoriais naudojami algoritmai: find_if, partition - su jais programa veikia ~5s trumpiau (su 10 mln. studentų failu)
+- Nuskaitymas iš failo naudojant stringstream - apie 4s spartesnis (su 10 mln. studentų failu)
+- Sukurtas Makefile
+
+## v0.5
+- Konteinerių testavimas: vector, deque ir list
+
+## v0.4
+- Atlikta programos spartos analizė (lentelė README faile). Spartos matavimui sukurta klasė Timer.
+- Nuo dabar sugeneruotus studentų duomenis galima įrašyti į failą. Priklausomai nuo vartotojo pasirinkimo sukuriamas vienas išvesties failas output.txt arba du - output_tinginiai.txt ir output_mokslinciai.txt (pagal kategorijas)
+- Visas vartotojo pasirinkimų įvedimas tikrinimas sutrauktas į vieną funkciją, išvengiant pasikartojančio kodo
+- Kodo refactoringas
+
+## v0.3
+
+- Pridėtas try/catch metodas, bandant atidaryti neegzistuojantį failą.
+- Programos veikimo pabaigoje ištrinami visi vektoriai.
+
+## v0.2
+
+- Galima pasirinkti skaitymą iš failo bei rašymą į failą. Šios funkcijos patalpintos faile file_functions.cpp
+- Rezultatai, išrašomi faile yra išrikiuojami abėcėlės tvarka
+- Vietoj daugelio if/else naudojamas switch
+- Pašalinta masyvų versija
+
+## v0.1
+
+- Pradinė programos versija
