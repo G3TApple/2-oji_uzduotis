@@ -36,33 +36,9 @@ int main()
         visa_trukme += stud_gen(grupe,temp,uzkl_2);
         break;
     }
-    if(uzkl_1 != 3 && uzkl_3 != 2){    /// Jei rezultatai rasomi ne i faila
-        cout<<endl<<left<<setw(15)<<"Vardas"<<setw(20)<<"Pavarde";
-        switch(uzkl_2){
-        case 1:
-            cout<<setw(15)<<"Galutinis (Vid.)"<<endl;
-            break;
-        case 2:
-            cout<<setw(15)<<"Galutinis (Med.)"<<endl;
-            break;
-        case 3:
-            cout<<setw(15)<<"Galutinis (Vid. / Med.)"<<endl;
-            break;
-        case 4:
-            cout<<setw(15)<<"Pazymiai"<<endl;
-            break;
-        }
-        cout<<"---------------------------------------------------"<<endl;
-        for(const auto &i:grupe)
-            spausd(i,uzkl_2,uzkl_1);
-        if(uzkl_2 != 4){    /// Jei pazymiai dar nebuvo spausdinti
-            cout << "\nAr norite spausdinti pazymius? (jei taip - iveskite '4', jei ne - '0')";
-            int_input_check(uzkl_4,(vector<int>){4, 0});
-            if(uzkl_4 == 4)
-                for(const auto &i:grupe)
-                    spausd(i,uzkl_4,uzkl_1);
-        }
-    } else {
+    if(uzkl_1 != 3 && uzkl_3 != 2)   /// Jei rezultatai rasomi ne i faila
+        isvedimas_i_ekrana(grupe,uzkl_4,uzkl_2,uzkl_1);
+    else {
         if(uzkl_5 == 0){ /// Jei studentai neskirstomi i mokslincius ir tinginius
             Timer print;
             if(uzkl_2 == 4) /// Jeigu generuojami studentu pazymiai velesniam naudojimui

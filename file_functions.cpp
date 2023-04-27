@@ -13,6 +13,8 @@ double failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
     system("dir /B *.txt");
     cout << "-----------------------\nIveskite failo pavadinima, is kurio norite nuskaityti duomenis: ";
     ifstream fd;
+    char buffer[1048576];
+    fd.rdbuf()->pubsetbuf(buffer,1048576);      /// pakeiciamas buferio dydis is 512B i 1MB
     while(1){
         cin >> readfile;
         fd.open(readfile);
@@ -21,7 +23,6 @@ double failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
         else
             break;
     }
-
     Timer t;
     getline(fd,eilute);
     stringstream s(eilute);
@@ -31,8 +32,9 @@ double failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
     if(paz_skaicius > 0){
         stringstream buf;
         buf << fd.rdbuf();
-        while(buf >> temp.vardas ){
-            buf >> temp.pavarde;
+
+        while(buf >> temp.vardas >> temp.pavarde){
+            temp.paz.reserve(paz_skaicius);
             for(int i=0;i<paz_skaicius;i++){
                 buf >> p;
                 temp.paz.push_back(p);
@@ -52,8 +54,8 @@ double failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
             case 4:
                 break;
             }
-            grupe.push_back(temp);
             temp.paz.clear();
+            grupe.push_back(temp);
         }
     } else {
         cout << "Klaida: duomenu faile nerasta pazymiu.";
@@ -110,23 +112,23 @@ void spausd_i_faila(vector<Studentas>& grupe, int uzkl_1, int uzkl_2, string fil
     (*oss) <<left<<setw(15)<<"Vardas"<<setw(20)<<"Pavarde";
     switch(uzkl_2){
         case 1:
-            (*oss)<<setw(15)<<"Galutinis (Vid.)"<<endl;
+            (*oss)<<setw(15)<<"Galutinis (Vid.)\n";
             break;
         case 2:
-            (*oss)<<setw(15)<<"Galutinis (Med.)"<<endl;
+            (*oss)<<setw(15)<<"Galutinis (Med.)\n";
             break;
         case 3:
-            (*oss)<<setw(15)<<"Galutinis (Vid. / Med.)"<<endl;
+            (*oss)<<setw(15)<<"Galutinis (Vid. / Med.)\n";
             break;
         case 4:
             for(int i=1;i<=paz_skaicius;i++)
                 (*oss)<<"ND"<<setw(4)<<to_string(i);
-            (*oss)<<"Egz."<<endl;
+            (*oss)<<"Egz.\n";
             break;
         }
-    (*oss)<<"----------------------------------------------------------------------------------------------------------------------"<<endl;
+    (*oss)<<"----------------------------------------------------------------------------------------------------------------------\n";
     fr << oss->str();
-    oss->str("");
+    oss->str("");      /// oss reset
     switch(uzkl_2){
     case 1:
         for(const auto &i:grupe)
@@ -145,11 +147,10 @@ void spausd_i_faila(vector<Studentas>& grupe, int uzkl_1, int uzkl_2, string fil
             (*oss)<<setw(15)<<i.vardas<<setw(20)<<i.pavarde;
             for (const auto &j: i.paz)
                 (*oss) << setw(5) << j << " ";
-            (*oss) << setw(5) << i.egz << endl;
+            (*oss) << setw(5) << i.egz << "\n";
         }
         break;
     }
-
     fr << oss->str();
     oss->str("");
     fr.close();

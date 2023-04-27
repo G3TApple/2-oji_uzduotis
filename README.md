@@ -2,6 +2,10 @@
 
 ### **Programa, skirta studentų galutinio balo skaičiavimui.**
 
+# Instaliavimas
+
+- Atsisiuntę programą, jos aplanke paleiskite komandą *make*, norėdami sukurti paleidžiamąjį failą. Norėdami ištrinti sukurtus failus, rašykite *make clean*.
+
 **Duomenų įvedimas ranka:**
 1. Įveskite didžiausią įmanomą pažymių skaičių. 
 2. Toliau įveskite studento vardą ir pavardę bei gautus pažymius. Norėdami nutraukti pažymių vedimą, įveskite bet kokį simbolį vietoj pažymio. Tuomet išsaugota bus tik tiek pažymių, kiek įvedėte. Įvedus pažymius prašoma įvesti egzamino pažymį.
