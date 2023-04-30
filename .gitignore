@@ -1,6 +1,9 @@
 # Prerequisites
 *.d
 
+*/bin
+*/obj
+
 # Compiled Object files
 *.slo
 *.lo
@@ -30,3 +33,9 @@
 *.exe
 *.out
 *.app
+
+# Codeblocks files
+*.cbp
+*.layout
+*.depend
+*.txt
