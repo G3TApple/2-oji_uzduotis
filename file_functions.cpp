@@ -35,7 +35,14 @@ double failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
         string vardas, pavarde;
         vector<int> paz;
         int egz;
-        double gal_vid, gal_med;
+        float gal_vid = 0, gal_med = 0;
+
+        int n = 0;
+        while( getline( buf, eilute ) ) /// skaiciuojamas studentu skaicius
+            n++;
+        grupe.reserve(n);
+        buf.clear();
+        buf.seekg(0);
 
         while(buf >> vardas >> pavarde){
             paz.reserve(paz_skaicius);
@@ -59,8 +66,7 @@ double failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
                 break;
             }
             paz.clear();
-            Studentas* ptr = new Studentas(vardas,pavarde,paz,egz,gal_vid,gal_med);
-            grupe.push_back(*ptr);
+            grupe.push_back(Studentas(vardas,pavarde,paz,egz,gal_vid,gal_med));
         }
     } else {
         cout << "Klaida: duomenu faile nerasta pazymiu.";

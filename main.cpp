@@ -5,11 +5,29 @@ size_t paz_skaicius;
 
 int main()
 {
-    //int uzkl_1 = -1, uzkl_2 = -1, uzkl_3 = -1, uzkl_4 = -1, uzkl_5 = -1, uzkl_6 = -1;
+//    vector<int> paz{1,2,3};
+//    Studentas s1("Vardas","Pavarde",paz,4,5.2,8.4);
+//    Studentas s2(s1);
+//    cout << s2;
+//
+//    Studentas s3;
+//    s3 = s2;
+//    cout << s3;
+//
+//    Studentas s4 = std::move(s2);
+//    cout << s4;
+//
+//    Studentas s5;
+//    s5 = std::move(s1);
+//    cout << s5 << endl;
+
+    ////////////////
+
+    int uzkl_1 = -1, uzkl_2 = -1, uzkl_3 = -1, uzkl_4 = -1, uzkl_5 = -1, uzkl_6 = -1;
     vector<Studentas> grupe;
     Studentas temp;
     double visa_trukme = 0;
-    /*cout << "Ar norite: \n 1. Ivesti vardus ir pazymius (iveskite '1')\n 2. Generuoti vardus ir pazymius atsitiktinai (iveskite '2')\n 3. Skaityti vardus ir pazymius is failo (iveskite '3')\n";
+    cout << "Ar norite: \n 1. Ivesti vardus ir pazymius (iveskite '1')\n 2. Generuoti vardus ir pazymius atsitiktinai (iveskite '2')\n 3. Skaityti vardus ir pazymius is failo (iveskite '3')\n";
     int_input_check(uzkl_1,(vector<int>){1, 2, 3});
     cout << "\nAr norite:\n 1. Skaiciuoti vidurki (iveskite '1')\n 2. Skaiciuoti mediana (iveskite '2')\n 3. Skaiciuoti mediana ir vidurki (iveskite '3')\n 4. Spausdinti pazymius (iveskite '4')\n";
     int_input_check(uzkl_2,(vector<int>){1, 2, 3, 4});
@@ -27,7 +45,7 @@ int main()
     }
     switch(uzkl_1){
     case 1:
-        stud_ivest(grupe,temp,uzkl_2);
+        stud_ivest(grupe,uzkl_2);
         break;
     case 3:
         visa_trukme += failo_nuskaitymas(grupe,uzkl_2);
@@ -50,14 +68,7 @@ int main()
         }
         else
             skirstymas(uzkl_6,uzkl_2,uzkl_1,grupe,visa_trukme);
+        cout << "Visas programos darbas truko: "<< visa_trukme << "s\n";
     }
-    */
-
-    visa_trukme += failo_nuskaitymas(grupe,1);
-    Timer print;
-    spausd_i_faila(grupe,3,1,"output.txt");
-    visa_trukme += print.elapsed();
-
-    cout << "Visas programos darbas truko: "<< visa_trukme << "s\n";
     system("pause");
 }
