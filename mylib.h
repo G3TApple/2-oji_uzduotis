@@ -15,6 +15,7 @@
 #include <fstream>
 #include <sstream>
 #include <tuple>
+#include <utility>
 
 using std::cout;
 using std::cin;
@@ -38,10 +39,8 @@ using std::unique_ptr;
 using std::ostringstream;
 using std::istringstream;
 using std::partition;
-using std::find_if;
-using std::copy;
-using std::move;
 using std::tie;
+using std::move;
 
 #include "Studentas.h"
 
@@ -66,14 +65,13 @@ class Timer {
 bool tik_raides(string name);
 void int_input_check(int& input, vector<int> correct);
 void skirstymas(int& uzkl_6, int& uzkl_2, int& uzkl_1, vector<Studentas>& grupe, double& visa_trukme);
-void stud_ivest(vector<Studentas> &grupe, Studentas &temp, int uzkl_2);
+void stud_ivest(vector<Studentas> &grupe, int uzkl_2);
 void isvedimas_i_ekrana(vector<Studentas> &grupe,int& uzkl_4,int& uzkl_2,int& uzkl_1);
-void pild(Studentas &temp, int uzkl_2);
+void pild(vector<Studentas> &grupe, int uzkl_2);
 void spausd(const Studentas &temp, int uzkl_2, int uzkl_1);
 double stud_gen(vector<Studentas> &grupe, Studentas &temp, int uzkl_2);
 void gen_paz(int kelintas, int uzkl_2, Studentas &temp);
-double mediana(vector<int> paz, int egz);
-double vidurkis(vector<int> paz, int egz);
-bool grupes_rik_pagal_varda(const Studentas &a, const Studentas &b);
+float mediana(vector<int> paz, int egz);
+float vidurkis(vector<int> paz, int egz);
 
 #endif // MYLIB_H_INCLUDED
