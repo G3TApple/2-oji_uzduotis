@@ -112,10 +112,10 @@ Naudojamo kompiuterio specifikacijos:
 
 |                               **Studentų kiekis** | **100.000** | **1.000.000** | **10.000.000** |
 |--------------------------------------------------:|-------------|---------------|----------------|
-| _Skaitymas iš failo (laikas, s)_                  | 0.360       | 3.488         | 35.975         |
-| _Studentų rūšiavimas didėjimo tvarka (laikas, s)_ | 0.067       | 2.438         | 11.276         |
-| _Studentų rūšiavimas į dvi grupes (laikas, s)_    | 0.134       | 1.858         | 24.836         |
-| _Visas konteinerių darbas (laikas, s)_ 	        | 0.561       | 7.784         | 72.087         |
+| _Skaitymas iš failo (laikas, s)_                  | 0.156       | 1.533         | 15.997         |
+| _Studentų rūšiavimas į dvi grupes (laikas, s)_    | 0.004       | 0.046         | 0.462          |
+| _Studentų rūšiavimas didėjimo tvarka (laikas, s)_ | 0.040       | 0.508         | 6.074          |
+| _Visas konteinerių darbas (laikas, s)_ 	        | 0.330       | 2.991         | 31.372         |
 
 ### Programos veikimo spartos lentelė naudojant *class* (su flag'u -O3): <br>
 
