@@ -8,13 +8,8 @@ class Zmogus
     public:
         Zmogus() : vardas_(""), pavarde_("") {}
         Zmogus(string vardas, string pavarde) : vardas_(vardas), pavarde_(pavarde) {}
-
-        void vardas(string vardas) { vardas_ = vardas; }
-        void pavarde(string pavarde) { pavarde_ = pavarde; }
-        string vardas() const { return vardas_; }
-        string pavarde() const { return pavarde_; }
-
-        virtual ~Zmogus() {}
+        virtual string vardas() const = 0;
+        ~Zmogus() {}
 };
 
 class Studentas : public Zmogus
@@ -30,12 +25,16 @@ class Studentas : public Zmogus
         ~Studentas() { paz_.clear(); };
 
         //setteriai
+        void vardas(string vardas) { vardas_ = vardas; }
+        void pavarde(string pavarde) { pavarde_ = pavarde; }
         void paz(vector<int> paz) { paz_ = paz; }
         void egz(int egz) { egz_ = egz; }
         void gal_med(float gal_med) { gal_med_ = gal_med; }
         void gal_vid(float gal_vid) { gal_vid_ = gal_vid; }
 
         //getteriai
+        string vardas() const { return vardas_; }
+        string pavarde() const { return pavarde_; }
         vector<int> paz() const { return paz_; }
         int egz() const { return egz_; }
         float gal_med() const { return gal_med_; }
