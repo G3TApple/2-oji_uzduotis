@@ -128,6 +128,11 @@ Naudojamo kompiuterio specifikacijos:
 
 ---
 
+## v1.5
+
+- Sukurta abstrakti bazinė klasė Zmogus
+- Klasė Studentas pakeista į išvestinę Zmogus klasę
+
 ## v1.2
 
 - Klasei Studentas realizuota "Rule of five" ir pridėtas operatoriaus ">>" perkrovimas
