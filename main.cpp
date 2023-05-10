@@ -8,18 +8,21 @@ int main()
 //    vector<int> paz{1,2,3};
 //    Studentas s1("Vardas","Pavarde",paz,4,5.2,8.4);
 //    Studentas s2(s1);
-//    cout << s2;
+//    cout << "s2: "<<s2;
 //
 //    Studentas s3;
 //    s3 = s2;
-//    cout << s3;
+//    cout << "s3: " << s3;
 //
 //    Studentas s4 = std::move(s2);
-//    cout << s4;
+//    cout << "s4: " << s4;
 //
 //    Studentas s5;
 //    s5 = std::move(s1);
-//    cout << s5 << endl;
+//    cout << "s5: " << s5 << endl;
+//
+//    cout << "s2: " <<endl << s2 << endl;
+//    cout << "s1: " <<endl << s1 << endl;
 
     ////////////////
 

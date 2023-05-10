@@ -92,6 +92,14 @@
 
 *naudojamą atmintį limituoja kompiuteris
 
+Naudojamo kompiuterio specifikacijos:
+- CPU: AMD Ryzen 7 2700X 3.70 GHz 8c/16t
+- RAM: Corsair 2x8GB DDR4 3200MHz
+- Storage: Samsung 970 EVO Plus SSD 500GB NVMe M.2 (read/write - 3,500/3,300 MB/s)
+
+
+### Kompiliatoriaus optimizavimo lygio analizė
+
 | Flag | Greičio pokytis | Paleidžiamojo failo dydis |
 |:----------------:|---------|----------------|
 | -O3              | 1.00    | 168KB           |
@@ -100,16 +108,39 @@
 | -                | 1.16    | 3774KB          |
 
 
-Naudojamo kompiuterio specifikacijos:
-- CPU: AMD Ryzen 7 2700X 3.70 GHz 8c/16t
-- RAM: Corsair 2x8GB DDR4 3200MHz
-- Storage: Samsung 970 EVO Plus SSD 500GB NVMe M.2 (read/write - 3,500/3,300 MB/s)
+### Programos veikimo spartos lentelė naudojant *struct* (su flag'u -O3): <br>
+
+|                               **Studentų kiekis** | **100.000** | **1.000.000** | **10.000.000** |
+|--------------------------------------------------:|-------------|---------------|----------------|
+| _Skaitymas iš failo (laikas, s)_                  | 0.156       | 1.533         | 15.997         |
+| _Studentų rūšiavimas į dvi grupes (laikas, s)_    | 0.004       | 0.046         | 0.462          |
+| _Studentų rūšiavimas didėjimo tvarka (laikas, s)_ | 0.040       | 0.508         | 6.074          |
+| _Visas konteinerių darbas (laikas, s)_ 	        | 0.330       | 2.991         | 31.372         |
+
+### Programos veikimo spartos lentelė naudojant *class* (su flag'u -O3): <br>
+
+|                               **Studentų kiekis** | **100.000** | **1.000.000** | **10.000.000** |
+|--------------------------------------------------:|-------------|---------------|----------------|
+| _Skaitymas iš failo (laikas, s)_                  | 0.213       | 2.124         | 21.566         |
+| _Studentų rūšiavimas į dvi grupes (laikas, s)_    | 0.010       | 0.053         | 0.529          |
+| _Studentų rūšiavimas didėjimo tvarka (laikas, s)_ | 0.064       | 0.809         | 9.734          |
+| _Visas programos darbas (laikas, s)_ 	            | 0.388       | 3.894         | 40.939         |
 
 ---
 
+## v1.5
+
+- Sukurta abstrakti bazinė klasė Zmogus
+- Klasė Studentas pakeista į išvestinę Zmogus klasę
+
+## v1.2
+
+- Klasei Studentas realizuota "Rule of five" ir pridėtas operatoriaus ">>" perkrovimas
+
 ## v1.1
 
-- Sukurta studentų klasė
+- Programa perrašyta, vietoj struct naudojant class
+- Atlikta kompiliatoriaus optimizavimo lygio analizė, t.y. kaip nuo flag'ų kinta programos greitis
 
 ## v1.0
 - Sukurtos dvi skirstymo į dvi grupes strategijos

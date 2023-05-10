@@ -1,31 +1,41 @@
 #ifndef STUDENTAS_H
 #define STUDENTAS_H
 
+class Zmogus
+{
+    protected:
+        string vardas_, pavarde_;
+    public:
+        Zmogus() : vardas_(""), pavarde_("") {}
+        Zmogus(string vardas, string pavarde) : vardas_(vardas), pavarde_(pavarde) {}
 
-class Studentas
+        void vardas(string vardas) { vardas_ = vardas; }
+        void pavarde(string pavarde) { pavarde_ = pavarde; }
+        string vardas() const { return vardas_; }
+        string pavarde() const { return pavarde_; }
+
+        virtual ~Zmogus() {}
+};
+
+class Studentas : public Zmogus
 {
     private:
-        string vardas_, pavarde_;
         vector<int> paz_;
         int egz_;
         float gal_vid_, gal_med_;
 
     public:
-        Studentas() : vardas_(""), pavarde_(""), egz_(0), gal_vid_(0), gal_med_(0) {}
-        Studentas(string vardas, string pavarde, vector<int> paz, int egz, float gal_vid, float gal_med) : vardas_(vardas), pavarde_(pavarde), paz_(paz), egz_(egz), gal_vid_(gal_vid), gal_med_(gal_med) {}
+        Studentas() : Zmogus(), egz_(0), gal_vid_(0), gal_med_(0) {}
+        Studentas(string vardas, string pavarde, vector<int> paz, int egz, float gal_vid, float gal_med) : Zmogus(vardas,pavarde), paz_(paz), egz_(egz), gal_vid_(gal_vid), gal_med_(gal_med) {}
         ~Studentas() { paz_.clear(); };
 
         //setteriai
-        void vardas(string vardas) { vardas_ = vardas; }
-        void pavarde(string pavarde) { pavarde_ = pavarde; }
         void paz(vector<int> paz) { paz_ = paz; }
         void egz(int egz) { egz_ = egz; }
         void gal_med(float gal_med) { gal_med_ = gal_med; }
         void gal_vid(float gal_vid) { gal_vid_ = gal_vid; }
 
         //getteriai
-        string vardas() const { return vardas_; }
-        string pavarde() const { return pavarde_; }
         vector<int> paz() const { return paz_; }
         int egz() const { return egz_; }
         float gal_med() const { return gal_med_; }
@@ -65,8 +75,11 @@ class Studentas
             return *this;
         }
 
-        Studentas(Studentas&& st) : vardas_(move(st.vardas_)), pavarde_(move(st.pavarde_)), paz_(move(st.paz_)), egz_(move(st.egz_)), gal_vid_(move(st.gal_vid_)), gal_med_(move(st.gal_med_)) {
+        Studentas(Studentas&& st) : Zmogus(move(st.vardas_), move(st.pavarde_)), paz_(move(st.paz_)), egz_(move(st.egz_)), gal_vid_(move(st.gal_vid_)), gal_med_(move(st.gal_med_)) {
 //            cout << "move konstruktorius \n";
+            st.gal_med_ = 0;
+            st.gal_vid_ = 0;
+            st.egz_ = 0;
         }
 
         Studentas& operator = (Studentas&& st){
@@ -78,6 +91,10 @@ class Studentas
                 egz_ = std::move(st.egz_) ;
                 gal_vid_ = std::move(st.gal_vid_) ;
                 gal_med_ = std::move(st.gal_med_) ;
+                st.gal_med_ = 0;
+                st.gal_vid_ = 0;
+                st.egz_ = 0;
+                st.paz_.clear();
             }
             return *this;
         }
