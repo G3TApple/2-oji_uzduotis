@@ -43,7 +43,7 @@ class Studentas
         bool operator < (const Studentas& st) const { return (vardas_ == st.vardas()) ? (pavarde_ < st.pavarde()) : (vardas_ < st.vardas()); }
 
         Studentas(const Studentas& st){
-//            cout << "copy konstruktorius \n";
+            cout << "copy konstruktorius \n";
             vardas_ = st.vardas_;
             pavarde_ = st.pavarde_;
             paz_ = st.paz_;
@@ -53,7 +53,7 @@ class Studentas
         }
 
         Studentas& operator = (const Studentas& st) {
-//            cout << "copy priskyrimo operatorius \n";
+            cout << "copy priskyrimo operatorius \n";
             if (&st != this){
                 vardas_ = st.vardas_;
                 pavarde_ = st.pavarde_;
@@ -66,11 +66,11 @@ class Studentas
         }
 
         Studentas(Studentas&& st) : vardas_(move(st.vardas_)), pavarde_(move(st.pavarde_)), paz_(move(st.paz_)), egz_(move(st.egz_)), gal_vid_(move(st.gal_vid_)), gal_med_(move(st.gal_med_)) {
-//            cout << "move konstruktorius \n";
+            cout << "move konstruktorius \n";
         }
 
         Studentas& operator = (Studentas&& st){
-//            cout << "move priskyrimo operatorius \n";
+            cout << "move priskyrimo operatorius \n";
             if (&st != this){
                 vardas_ = std::move(st.vardas_);
                 pavarde_ = std::move(st.pavarde_);
@@ -78,6 +78,10 @@ class Studentas
                 egz_ = std::move(st.egz_) ;
                 gal_vid_ = std::move(st.gal_vid_) ;
                 gal_med_ = std::move(st.gal_med_) ;
+                st.gal_med_ = 0;
+                st.gal_vid_ = 0;
+                st.egz_ = 0;
+                st.paz_.clear();
             }
             return *this;
         }

@@ -5,21 +5,23 @@ size_t paz_skaicius;
 
 int main()
 {
-//    vector<int> paz{1,2,3};
-//    Studentas s1("Vardas","Pavarde",paz,4,5.2,8.4);
-//    Studentas s2(s1);
-//    cout << s2;
-//
-//    Studentas s3;
-//    s3 = s2;
-//    cout << s3;
-//
-//    Studentas s4 = std::move(s2);
-//    cout << s4;
-//
-//    Studentas s5;
-//    s5 = std::move(s1);
-//    cout << s5 << endl;
+    vector<int> paz{1,2,3};
+    Studentas s1("Vardas","Pavarde",paz,4,5.2,8.4);
+    Studentas s2(s1);
+    cout << s2;
+
+    Studentas s3;
+    s3 = s2;
+    cout << s3;
+
+    Studentas s4 = std::move(s2);
+    cout << s4;
+
+    Studentas s5;
+    s5 = std::move(s1);
+    cout << s5 << endl;
+
+    cout << "s1: " <<endl << s1 << endl;
 
     ////////////////
 
