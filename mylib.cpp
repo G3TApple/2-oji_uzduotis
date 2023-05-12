@@ -9,12 +9,10 @@ void skirstymas(int& uzkl_6, int& uzkl_2, int& uzkl_1, vector<Studentas>& grupe,
         Timer tinginiai_mokslinciai;
 
         if(uzkl_2 == 1 || uzkl_2 == 3){     /// skaiciuojama pagal vidurki, jei galutinis yra vidurkis arba vidurkis/mediana
-                cout << "partition start \n\n";
             auto it = partition(grupe.begin(), grupe.end(), [](Studentas s)
             {
                 return s.gal_vid()>5.0;
             });
-        cout << "partition end \n\n";
             tinginiai = {it, grupe.end()};
             mokslinciai = {grupe.begin(), it};
         }

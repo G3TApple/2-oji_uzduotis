@@ -101,7 +101,6 @@ void spausd_i_faila(vector<Studentas>& grupe, int uzkl_1, int uzkl_2, string fil
     fr << oss->str();
     oss->str("");      /// oss reset
 
-
     switch(uzkl_2){
     case 1:
         for(auto &i:grupe)

@@ -40,6 +40,9 @@ class Studentas : public Zmogus
         float gal_med() const { return gal_med_; }
         float gal_vid() const { return gal_vid_; }
 
+        const string& vardas1() const { return vardas_; }
+        const string& pavarde1() const { return pavarde_; }
+
 
         friend std::ostream& operator<<(std::ostream &out, const Studentas &st){
             out<<left<<setw(15)<<st.vardas_<<setw(20)<<st.pavarde_;
@@ -49,17 +52,11 @@ class Studentas : public Zmogus
             return out;
         }
         //rusiavimas pagal varda ir pavarde
-        bool operator < (const Studentas& st) const { return (vardas_ == st.vardas()) ? (pavarde_ < st.pavarde()) : (vardas_ < st.vardas()); }
+        bool operator < (const Studentas& st) const { return tie(vardas_, pavarde_) < tie(st.vardas1(), st.pavarde1()); }
 
-        Studentas(const Studentas& st){
-//            cout << "copy konstruktorius \n";
-            vardas_ = st.vardas_;
-            pavarde_ = st.pavarde_;
-            paz_ = st.paz_;
-            egz_ = st.egz_;
-            gal_vid_ = st.gal_vid_;
-            gal_med_ = st.gal_med_ ;
-        }
+        Studentas(const Studentas& st) : Zmogus(st.vardas_,st.pavarde_),paz_(st.paz_),egz_(st.egz_),gal_vid_(st.gal_vid_),gal_med_(st.gal_med_) {}
+        //            cout << "copy konstruktorius \n";
+
 
         Studentas& operator = (const Studentas& st) {
 //            cout << "copy priskyrimo operatorius \n";
