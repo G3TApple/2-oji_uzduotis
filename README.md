@@ -1,4 +1,4 @@
-# Objektinio programavimo laboratorinis darbas - 1-oji užduotis.
+# Objektinio programavimo laboratorinis darbas - 2-oji užduotis.
 
 ### Programa, skirta studentų galutinio balo skaičiavimui.
 
