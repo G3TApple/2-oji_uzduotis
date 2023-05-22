@@ -6,7 +6,8 @@
 #include <string>
 #include <algorithm>
 #include <limits>
-#include <vector>
+//#include <Vector>
+#include "myVector.h"
 #include <random>
 #include <ctime>
 #include <numeric>
@@ -26,7 +27,7 @@ using std::fixed;
 using std::setw;
 using std::setprecision;
 using std::string;
-using std::vector;
+//using std::Vector;
 using std::numeric_limits;
 using std::to_string;
 using std::sort;
@@ -45,8 +46,8 @@ using std::move;
 #include "Studentas.h"
 
 template <class T>
-void statistika (vector <T> &temp){
-    cout<<" vector size: "<<temp.size()<<" vector capacity: "<<temp.capacity()<<"\n";
+void statistika (Vector <T> &temp){
+    cout<<" Vector size: "<<temp.size()<<" Vector capacity: "<<temp.capacity()<<"\n";
 }
 
 class Timer {
@@ -63,15 +64,15 @@ class Timer {
 };
 
 bool tik_raides(string name);
-void int_input_check(int& input, vector<int> correct);
-void skirstymas(int& uzkl_6, int& uzkl_2, int& uzkl_1, vector<Studentas>& grupe, double& visa_trukme);
-void stud_ivest(vector<Studentas> &grupe, int uzkl_2);
-void isvedimas_i_ekrana(vector<Studentas> &grupe,int& uzkl_4,int& uzkl_2,int& uzkl_1);
-void pild(vector<Studentas> &grupe, int uzkl_2);
+void int_input_check(int& input, Vector<int> correct);
+void skirstymas(int& uzkl_6, int& uzkl_2, int& uzkl_1, Vector<Studentas>& grupe, double& visa_trukme);
+void stud_ivest(Vector<Studentas> &grupe, int uzkl_2);
+void isvedimas_i_ekrana(Vector<Studentas> &grupe,int& uzkl_4,int& uzkl_2,int& uzkl_1);
+void pild(Vector<Studentas> &grupe, int uzkl_2);
 void spausd(const Studentas &temp, int uzkl_2, int uzkl_1);
-double stud_gen(vector<Studentas> &grupe, Studentas &temp, int uzkl_2);
+double stud_gen(Vector<Studentas> &grupe, Studentas &temp, int uzkl_2);
 void gen_paz(int kelintas, int uzkl_2, Studentas &temp);
-float mediana(vector<int> paz, int egz);
-float vidurkis(vector<int> paz, int egz);
+float mediana(Vector<int> paz, int egz);
+float vidurkis(Vector<int> paz, int egz);
 
 #endif // MYLIB_H_INCLUDED
