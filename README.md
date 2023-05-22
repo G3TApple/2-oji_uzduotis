@@ -148,6 +148,9 @@ Naudojamo kompiuterio specifikacijos:
 | _std::vector _                  | 28                          |
 | _class Vector _                 | 9                           |
 
+### Vector konteinerio funkcionalumas:
+
+![image](https://github.com/G3TApple/2-oji_uzduotis/assets/116343289/abcc38a6-45fa-4860-a114-bf12a924295a)
 
 ---
 
