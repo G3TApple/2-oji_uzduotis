@@ -51,8 +51,6 @@ void skirstymas(int& uzkl_6, int& uzkl_2, int& uzkl_1, Vector<Studentas>& grupe,
             });
 
             tinginiai = {it, grupe.end()};
-                        cout << (*it).vardas() << " " << (*(grupe.end()-1)).vardas() << " " << grupe.end()-it << "\n";
-
             grupe.erase(it, grupe.end());
         }
         if(uzkl_2 == 2){        /// Jei galutinis yra mediana - skaiciuojama pagal mediana

@@ -19,9 +19,7 @@ template <class T> class Vector
         explicit Vector(size_t n, const T& val = T{}) { create(n, val); }
         Vector(const std::initializer_list<T> initList) { create(initList.begin(), initList.end()); } // c-tor su initializer list
         Vector(iterator first, iterator last) { create(first, last); }
-
         Vector(const Vector& v) { create(v.begin(), v.end()); } // copy c-tor
-
         Vector(Vector&& v) : data(std::move(v.data)), avail(std::move(v.avail)), limit(std::move(v.limit)) // move c-tor
         {
             v.data = v.avail = v.limit = nullptr;
@@ -34,11 +32,10 @@ template <class T> class Vector
                 data = std::move(rhs.data);
                 avail = std::move(rhs.avail);
                 limit = std::move(rhs.limit);
-                rhs.data = rhs.avail = rhs.limit = nullptr; // Reset the source vector
+                rhs.data = rhs.avail = rhs.limit = nullptr;
             }
             return *this;
         }
-
 
         Vector& operator=(const Vector& rhs) // copy priskyrimo operatorius
         {
@@ -50,6 +47,38 @@ template <class T> class Vector
         }
 
         ~Vector() { uncreate(); } // d-tor
+
+        void assign(size_type n, const T& value)  //assign funkcijos su dydzio bei reiksmes, dvieju iteratoriu bei initializer list argumentais
+        {
+            clear();
+            if (n > capacity())
+                grow(n);
+
+            while (size() < n)
+                unchecked_append(value);
+        }
+
+        void assign(iterator first, iterator last)
+        {
+            size_type n = std::distance(first, last);
+
+            clear();
+            if (n > capacity())
+                grow(n);
+
+            while (first != last)
+            {
+                unchecked_append(*first);
+                ++first;
+            }
+        }
+
+        void assign(std::initializer_list<T> initList)
+        {
+            assign(initList.begin(), initList.end());
+        }
+
+        /*= = = = = = = = = = = = = = = = = =  = = = = = = = = = = = = = = =*/
 
         T& at(size_type n)
         {
@@ -68,6 +97,7 @@ template <class T> class Vector
         T& back() { return data[size()-1]; }
         const T &back() const { return data[size()-1]; }
 
+        /*= = = = = = = = = = = = = = = = = =  = = = = = = = = = = = = = = =*/
 
         iterator begin() { return data; } // begin, end, rbegin ir ir rend persidengiancios funkcijos, grazinancios iteratorius
         const_iterator begin() const { return data; }
@@ -81,39 +111,8 @@ template <class T> class Vector
         reverse_iterator rend() { return reverse_iterator(data); }
         const_reverse_iterator rend() const { return reverse_iterator(data); }
 
-        void assign(size_type n, const T& value)
-        {
-            clear();
-            if (n > capacity())
-                grow(n);
 
-            // Construct copies of 'value' up to the specified count
-            while (size() < n)
-                unchecked_append(value);
-        }
-
-        void assign(iterator first, iterator last)
-        {
-            size_type n = std::distance(first, last);
-
-            clear();
-            if (n > capacity())
-                grow(n);
-
-            // Construct copies of elements in the range [first, last)
-            while (first != last)
-            {
-                unchecked_append(*first);
-                ++first;
-            }
-        }
-
-        void assign(std::initializer_list<T> initList)
-        {
-            assign(initList.begin(), initList.end());
-        }
-
-        iterator getData() const noexcept { return data; }
+        /*= = = = = = = = = = = = = = = = = =  = = = = = = = = = = = = = = =*/
 
         bool empty() const { return (begin() == end()); }
         size_type size() const { return avail - data; }
@@ -124,6 +123,8 @@ template <class T> class Vector
         void reserve(size_type n) { if (n > capacity()) grow(n); }
         size_type capacity() const { return limit - data; }
         void shrink_to_fit() { limit = avail; }
+
+        /*= = = = = = = = = = = = = = = = = =  = = = = = = = = = = = = = = =*/
 
         void clear()
         {
@@ -138,7 +139,7 @@ template <class T> class Vector
         {
             if (avail == limit) // jei netelpa naujas elementas - didinti vektoriaus talpa
                 grow();
-            std::move_backward(position, avail, avail + 1); // elementai perkeliami "i desine", pradedant nuo position
+            std::move_backward(position, avail, avail + 1); // elementai paslenkami "i desine", pradedant nuo position
             *(position) = value; // iterpiamas elementas i nustatyta vieta
             ++avail; // nes size padidejo vienu elementu
 
@@ -162,41 +163,40 @@ template <class T> class Vector
         iterator erase(iterator pos)
         {
             if (pos >= avail)
-                return pos; // Return the original iterator if the position is invalid
+                return pos; // klaidingo iteratoriaus atveju tiesiog grazinamas pats iteratorius
 
-            // Shift elements to the left to overwrite the erased element
-            std::move(pos + 1, avail, pos);
+            std::move(pos + 1, avail, pos); // elementai paslenkami "i kaire", perrasant istrintus elementus
 
             alloc.destroy(--avail);
             return pos + 1; // Iterator pointing to the next element
         }
+
         iterator erase(iterator first, iterator last)
         {
             if (first >= last)
-                return last; // Return the original 'last' iterator if the range is empty or invalid
+                return last; // klaidingo iteratoriaus atveju tiesiog grazinamas pats iteratorius
 
-            iterator new_end = std::move(last, avail, first); // Move the elements after the range to the left
+            iterator new_end = std::move(last, avail, first);
 
-            // Destroy the remaining elements beyond the new end
-            while (avail != new_end)
+            while (avail != new_end) // pasalinami like elementai
                 alloc.destroy(--avail);
 
-            return new_end; // Return the iterator pointing to the new end of the vector
+            return new_end; // grazinamas iteratorius, rodantis i nauja vektoriaus pabaiga
         }
 
         template<class... Args> void emplace_back(Args&&... args)
         {
             if (avail == limit)
                 grow();
-            alloc.construct(avail++, std::forward<Args>(args)...); // Construct the new element in-place at the end
+            alloc.construct(avail++, std::forward<Args>(args)...); // elementai sukonstruojami vektoriaus pabaigoje
         }
 
         void pop_back()
         {
             if (avail == data)
                 throw std::out_of_range("Vector::pop_back()");
-            --avail; // Decrement the 'avail' pointer to point to the last element
-            alloc.destroy(avail); // Destroy the last element
+            --avail;
+            alloc.destroy(avail); // sunaikinamas paskutinis elementas
         }
 
 
@@ -218,13 +218,13 @@ template <class T> class Vector
         {
             if (n < size()) {
                 while (avail != data + n)
-                    alloc.destroy(--avail); // Destroy excess elements beyond the new size
+                    alloc.destroy(--avail); // sunaikinami uz nauju ribu esantys elementai
             }
             else if (n > size()) {
                 if (n > capacity())
-                    grow(n); // Grow the vector if the new size exceeds the capacity
+                    grow(n);
                 while (avail != data + n)
-                    alloc.construct(avail++, value); // Construct copies of 'value' up to the new size
+                    alloc.construct(avail++, value);
             }
         }
 
@@ -317,7 +317,6 @@ template <class T> void Vector<T>::grow(int n)
     limit = data + new_size;
 }
 
-// tariame, kad `avail` point'ina į išskirtą, bet neinicializuotą vietą
 template <class T> void Vector<T>::unchecked_append(const T& val)
 {
     alloc.construct(avail++, val);
