@@ -1,11 +1,11 @@
 #include "mylib.h"
 #include "file_functions.h"
 
-size_t paz_skaicius;
+int paz_skaicius;
 
 int main()
 {
-//    vector<int> paz{1,2,3};
+//    Vector<int> paz{1,2,3};
 //    Studentas s1("Vardas","Pavarde",paz,4,5.2,8.4);
 //    Studentas s2(s1);
 //    cout << "s2: "<<s2;
@@ -27,24 +27,24 @@ int main()
     ////////////////
 
     int uzkl_1 = -1, uzkl_2 = -1, uzkl_3 = -1, uzkl_4 = -1, uzkl_5 = -1, uzkl_6 = -1;
-    vector<Studentas> grupe;
+    Vector<Studentas> grupe;
     Studentas temp;
     double visa_trukme = 0;
     cout << "Ar norite: \n 1. Ivesti vardus ir pazymius (iveskite '1')\n 2. Generuoti vardus ir pazymius atsitiktinai (iveskite '2')\n 3. Skaityti vardus ir pazymius is failo (iveskite '3')\n";
-    int_input_check(uzkl_1,(vector<int>){1, 2, 3});
+    int_input_check(uzkl_1,(Vector<int>){1, 2, 3});
     cout << "\nAr norite:\n 1. Skaiciuoti vidurki (iveskite '1')\n 2. Skaiciuoti mediana (iveskite '2')\n 3. Skaiciuoti mediana ir vidurki (iveskite '3')\n 4. Spausdinti pazymius (iveskite '4')\n";
-    int_input_check(uzkl_2,(vector<int>){1, 2, 3, 4});
+    int_input_check(uzkl_2,(Vector<int>){1, 2, 3, 4});
     if(uzkl_1 == 2){        /// Jei generuojami pazymiai - ar isvesti i ekrana, ar i faila
         cout << "\nAr norite: \n 1. Isvesti pazymius i ekrana (iveskite '1')\n 2. Isvesti rezultata i faila (iveskite '2')\n";
-        int_input_check(uzkl_3,(vector<int>){1, 2});
+        int_input_check(uzkl_3,(Vector<int>){1, 2});
     }
     if(uzkl_1 == 3 || uzkl_3 == 2){     /// Jei studentai skaitomi arba generuojami
         cout << "\nAr norite skirstyti studentus i mokslincius ir tinginius? Iveskite '1', jei taip, '0', jei ne.\n";
-        int_input_check(uzkl_5,(vector<int>){1, 0});
+        int_input_check(uzkl_5,(Vector<int>){1, 0});
     }
     if(uzkl_5 == 1){
         cout << "\nIveskite '1', jei norite naudoti 1 strategija (du nauji konteineriai) arba '2', jei norite naudoti 2 strategija (vienas naujas konteineris).\n";
-        int_input_check(uzkl_6,(vector<int>){1, 2});
+        int_input_check(uzkl_6,(Vector<int>){1, 2});
     }
     switch(uzkl_1){
     case 1:

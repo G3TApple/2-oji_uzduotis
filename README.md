@@ -108,7 +108,7 @@ Naudojamo kompiuterio specifikacijos:
 | -                | 1.16    | 3774KB          |
 
 
-### Programos veikimo spartos lentelė naudojant *struct* (su flag'u -O3): <br>
+### Programos veikimo spartos lentelė naudojant *struct Studentas* ir *std::vector*(su flag'u -O3): <br>
 
 |                               **Studentų kiekis** | **100.000** | **1.000.000** | **10.000.000** |
 |--------------------------------------------------:|-------------|---------------|----------------|
@@ -117,7 +117,7 @@ Naudojamo kompiuterio specifikacijos:
 | _Studentų rūšiavimas didėjimo tvarka (laikas, s)_ | 0.040       | 0.508         | 6.074          |
 | _Visas konteinerių darbas (laikas, s)_ 	        | 0.330       | 2.991         | 31.372         |
 
-### Programos veikimo spartos lentelė naudojant *class* (su flag'u -O3): <br>
+### Programos veikimo spartos lentelė naudojant *class Studentas* ir *std::vector* (su flag'u -O3): <br>
 
 |                               **Studentų kiekis** | **100.000** | **1.000.000** | **10.000.000** |
 |--------------------------------------------------:|-------------|---------------|----------------|
@@ -126,7 +126,36 @@ Naudojamo kompiuterio specifikacijos:
 | _Studentų rūšiavimas didėjimo tvarka (laikas, s)_ | 0.064       | 0.809         | 9.734          |
 | _Visas programos darbas (laikas, s)_ 	            | 0.388       | 3.894         | 40.939         |
 
+### Programos veikimo spartos lentelė naudojant *class Studentas* ir *class Vector* (su flag'u -O3): <br>
+
+|                               **Studentų kiekis** | **100.000** | **1.000.000** | **10.000.000** |
+|--------------------------------------------------:|-------------|---------------|----------------|
+| _Skaitymas iš failo (laikas, s)_                  | 0.186       | 1.885         | 18.611         |
+| _Studentų rūšiavimas į dvi grupes (laikas, s)_    | 0.020       | 0.151         | 1.526          |
+| _Studentų rūšiavimas didėjimo tvarka (laikas, s)_ | 0.047       | 0.576         | 6.912          |
+| _Visas programos darbas (laikas, s)_ 	            | 0.356       | 3.528         | 36.462         |
+
+
+### std::vector ir class Vector konteinerių pildymo spartos lentelė: <br>
+|                             **Konteinerio dydis** | **10.000** | **100.000** | **1.000.000** | **10.000.000** | **100.000.000** |
+|--------------------------------------------------:|------------|-------------|---------------|----------------|-----------------|
+| _std::vector (laikas, s)_                         | 0.001      | 0.001       | 0.004         | 0.052          | 0.523           |
+| _class Vector (laikas, s)_                        | 0.000      | 0.001       | 0.004         | 0.031          | 0.302           |
+
+### Atminties perskirstymai užpildant 100.000.000 elementų: <br>
+|                                 | **Atminties perskirstymai** |
+|--------------------------------:|-----------------------------|
+| _std::vector _                  | 28                          |
+| _class Vector _                 | 9                           |
+
+
 ---
+
+### v2.0 + vector class
+
+- Vietoj std::vector naudojama nauja Vector klasė
+- Po išsamių testų - mano Vector konteineris veikia taip pat, kaip ir std::vector
+- Atlikta spartos analizė naudojant std::vector ir Vector klasę
 
 ## v1.5
 

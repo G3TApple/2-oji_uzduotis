@@ -3,11 +3,10 @@
 
 extern size_t paz_skaicius;
 
-void skirstymas(int& uzkl_6, int& uzkl_2, int& uzkl_1, vector<Studentas>& grupe, double& visa_trukme){
+void skirstymas(int& uzkl_6, int& uzkl_2, int& uzkl_1, Vector<Studentas>& grupe, double& visa_trukme){
     if(uzkl_6 == 1) {       /// Jei du nauji konteineriai
-        vector<Studentas> tinginiai, mokslinciai;
+        Vector<Studentas> tinginiai, mokslinciai;
         Timer tinginiai_mokslinciai;
-
         if(uzkl_2 == 1 || uzkl_2 == 3){     /// skaiciuojama pagal vidurki, jei galutinis yra vidurkis arba vidurkis/mediana
             auto it = partition(grupe.begin(), grupe.end(), [](Studentas s)
             {
@@ -41,8 +40,10 @@ void skirstymas(int& uzkl_6, int& uzkl_2, int& uzkl_1, vector<Studentas>& grupe,
         tinginiai.clear();
         mokslinciai.clear();
     } else {        /// Jei vienas naujas konteineris
-        vector<Studentas> tinginiai;
+        Vector<Studentas> tinginiai;
         Timer tinginiai_mokslinciai;
+
+
         if(uzkl_2 == 1 || uzkl_2 == 3){      /// Jei galutinis yra vidurkis arba vidurkis/mediana - skaiciuojama pagal vidurki
             auto it = partition(grupe.begin(), grupe.end(), [](Studentas s)
             {
@@ -78,7 +79,7 @@ void skirstymas(int& uzkl_6, int& uzkl_2, int& uzkl_1, vector<Studentas>& grupe,
     }
 }
 
-void stud_ivest(vector<Studentas> &grupe, int uzkl_2){
+void stud_ivest(Vector<Studentas> &grupe, int uzkl_2){
     string uzkl;
     cout << "\nKiek daugiausia pazymiu gales tureti kiekvienas studentas? ";
     cin >> paz_skaicius;
@@ -96,7 +97,7 @@ void stud_ivest(vector<Studentas> &grupe, int uzkl_2){
     } while (uzkl != "n" && uzkl != "N");
 }
 
-void isvedimas_i_ekrana(vector<Studentas> &grupe,int& uzkl_4,int& uzkl_2,int& uzkl_1){
+void isvedimas_i_ekrana(Vector<Studentas> &grupe,int& uzkl_4,int& uzkl_2,int& uzkl_1){
     cout<<endl<<left<<setw(15)<<"Vardas"<<setw(20)<<"Pavarde";
     switch(uzkl_2){
     case 1:
@@ -117,7 +118,7 @@ void isvedimas_i_ekrana(vector<Studentas> &grupe,int& uzkl_4,int& uzkl_2,int& uz
         spausd(i,uzkl_2,uzkl_1);
     if(uzkl_2 != 4){    /// Jei pazymiai dar nebuvo spausdinti
         cout << "\nAr norite spausdinti pazymius? (jei taip - iveskite '4', jei ne - '0')";
-        int_input_check(uzkl_4,(vector<int>){4, 0});
+        int_input_check(uzkl_4,(Vector<int>){4, 0});
         if(uzkl_4 == 4){
             cout<<endl<<left<<setw(15)<<"Vardas"<<setw(20)<<"Pavarde"<<setw(15)<<"Pazymiai"<<endl;
             cout<<"---------------------------------------------------"<<endl;
@@ -127,10 +128,10 @@ void isvedimas_i_ekrana(vector<Studentas> &grupe,int& uzkl_4,int& uzkl_2,int& uz
     }
 }
 
-void pild(vector<Studentas> &grupe, int uzkl_2){
+void pild(Vector<Studentas> &grupe, int uzkl_2){
     int p;
     string vardas, pavarde;
-    vector<int> paz;
+    Vector<int> paz;
     int egz;
     float gal_vid = 0, gal_med = 0;
     cout<<"\nIveskite studento varda ir pavarde: ";
@@ -217,7 +218,7 @@ void spausd(const Studentas &temp, int uzkl_2, int uzkl_1){
 }
 
 void gen_paz(int kelintas, int uzkl_2, Studentas &temp){
-    vector<int> pazymiai;
+    Vector<int> pazymiai;
     int egz;
     float gal_vid,gal_med;
     static std::random_device _rd;
@@ -251,7 +252,7 @@ void gen_paz(int kelintas, int uzkl_2, Studentas &temp){
     }
 }
 
-double stud_gen(vector<Studentas> &grupe, Studentas &temp, int uzkl_2){
+double stud_gen(Vector<Studentas> &grupe, Studentas &temp, int uzkl_2){
     int stud_sk;
     cout << "Kiek studentu norite generuoti? ";
     cin >> stud_sk;
@@ -278,12 +279,12 @@ double stud_gen(vector<Studentas> &grupe, Studentas &temp, int uzkl_2){
 
 ///Pagalbines funkcijos/////////////////////////////////////////////////////////
 
-float vidurkis(vector<int> paz, int egz){
+float vidurkis(Vector<int> paz, int egz){
     float paz_suma = accumulate(paz.begin(),paz.end(),0.);
     return (0.6*egz+0.4*paz_suma/paz_skaicius);
 }
 
-float mediana(vector<int> paz, int egz){
+float mediana(Vector<int> paz, int egz){
     float med;
     sort(paz.begin(),paz.end());
     if(paz.size()%2 == 0) /// jei pazymiu skaicius lyginis
@@ -297,7 +298,7 @@ bool tik_raides(string name){
     return !std::regex_match(name, std::regex("^[A-Za-z]+$"));
 }
 
-void int_input_check(int& input, vector<int> correct){
+void int_input_check(int& input, Vector<int> correct){
     if (!(cin >> input)) {
             cin.clear();
             cin.ignore(numeric_limits<std::streamsize>::max(), '\n');

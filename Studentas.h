@@ -15,19 +15,19 @@ class Zmogus
 class Studentas : public Zmogus
 {
     private:
-        vector<int> paz_;
+        Vector<int> paz_;
         int egz_;
         float gal_vid_, gal_med_;
 
     public:
         Studentas() : Zmogus(), egz_(0), gal_vid_(0), gal_med_(0) {}
-        Studentas(string vardas, string pavarde, vector<int> paz, int egz, float gal_vid, float gal_med) : Zmogus(vardas,pavarde), paz_(paz), egz_(egz), gal_vid_(gal_vid), gal_med_(gal_med) {}
+        Studentas(string vardas, string pavarde, Vector<int> paz, int egz, float gal_vid, float gal_med) : Zmogus(vardas,pavarde), paz_(paz), egz_(egz), gal_vid_(gal_vid), gal_med_(gal_med) {}
         ~Studentas() { paz_.clear(); };
 
         //setteriai
         void vardas(string vardas) { vardas_ = vardas; }
         void pavarde(string pavarde) { pavarde_ = pavarde; }
-        void paz(vector<int> paz) { paz_ = paz; }
+        void paz(Vector<int> paz) { paz_ = paz; }
         void egz(int egz) { egz_ = egz; }
         void gal_med(float gal_med) { gal_med_ = gal_med; }
         void gal_vid(float gal_vid) { gal_vid_ = gal_vid; }
@@ -35,7 +35,7 @@ class Studentas : public Zmogus
         //getteriai
         string vardas() const { return vardas_; }
         string pavarde() const { return pavarde_; }
-        vector<int> paz() const { return paz_; }
+        Vector<int> paz() const { return paz_; }
         int egz() const { return egz_; }
         float gal_med() const { return gal_med_; }
         float gal_vid() const { return gal_vid_; }

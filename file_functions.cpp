@@ -3,7 +3,7 @@
 
 extern int paz_skaicius;
 
-double failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
+double failo_nuskaitymas(Vector<Studentas>& grupe, int uzkl_2){
     paz_skaicius = -3;
     Studentas temp;
     string eilute, eilute2, readfile, zodis;
@@ -33,7 +33,7 @@ double failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
         stringstream buf;
         buf << fd.rdbuf();
         string vardas, pavarde;
-        vector<int> paz;
+        Vector<int> paz;
         int egz;
         float gal_vid = 0, gal_med = 0;
 
@@ -77,7 +77,7 @@ double failo_nuskaitymas(vector<Studentas>& grupe, int uzkl_2){
     return t.elapsed();
 }
 
-void spausd_i_faila(vector<Studentas>& grupe, int uzkl_1, int uzkl_2, string filename){
+void spausd_i_faila(Vector<Studentas>& grupe, int uzkl_1, int uzkl_2, string filename){
     ofstream fr (filename);
     unique_ptr<ostringstream> oss(new ostringstream());
     (*oss) <<left<<setw(15)<<"Vardas"<<setw(20)<<"Pavarde";
